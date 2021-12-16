@@ -122,15 +122,17 @@ export default function SignIn() {
   const [isLogin, setLogin] = React.useState();
 
   const onFinish = async () => {
-    const data = { email, password };
-    axiosClient.post("/login", { email, password }).then((response: any) => {
-      if (response.data.success === true) {
-       alert("Signin Successfully ")
-      } else {
-        alert(response.data.success)
-      }
-      console.log(response.data.success);
-    });
+    const data = { email, password,  };
+    axiosClient
+      .post("/login", { email: email, password: password, _token: "{{ csrf_token() }}", })
+      .then((response: any) => {
+        if (response.data.success === true) {
+          alert("Signin Successfully ");
+        } else {
+          alert(response.data.success);
+        }
+        console.log(response.data.success);
+      });
   };
 
   const handleChangeEmail = React.useCallback((e) => {
@@ -200,6 +202,8 @@ export default function SignIn() {
                 layout="vertical"
                 className="row-col"
               >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
                 <Form.Item
                   className="username"
                   label="Email"
@@ -255,6 +259,7 @@ export default function SignIn() {
                     Sign Up
                   </Link>
                 </p>
+                ...@csrf
               </Form>
             </Col>
             <Col

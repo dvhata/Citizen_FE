@@ -10,6 +10,7 @@ const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json, text-plain, */*",
+    // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     // "X-Requested-With": "XMLHttpRequest",
     // "X-CSRF-TOKEN": token
   },
