@@ -12,6 +12,7 @@
 
 // import { useState } from "react";
 import { Menu, Button } from "antd";
+import { NavLink } from "react-router-dom";
 // import { NavLink, useLocation } from "react-router-dom";
 // import logo from "../../assets/images/logo.png";
 
@@ -162,32 +163,32 @@ function Sidenav({/*  color */ }) {
 
   return (
     <>
-      {/* <div className="brand">
-        <img src={logo} alt="" />
+      <div className="brand">
+        {/* <img src={logo} alt="" /> */}
         <span>Citizen V</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
-          <NavLink to="/dashboard">
+          <NavLink to="/">
             <span
               className="icon"
-              style={{
-                background: page === "dashboard" ? color : "",
-              }}
+              // style={{
+              //   background: page === "dashboard" ? color : "",
+              // }}
             >
               {dashboard}
             </span>
-            <span className="label">Dashboard</span>
+            <span className="label">Cấp tài khoản</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
           <NavLink to="/tables">
             <span
               className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
+              // style={{
+              //   background: page === "tables" ? color : "",
+              // }}
             >
               {tables}
             </span>
@@ -198,9 +199,9 @@ function Sidenav({/*  color */ }) {
           <NavLink to="/billing">
             <span
               className="icon"
-              style={{
-                background: page === "billing" ? color : "",
-              }}
+              // style={{
+              //   background: page === "billing" ? color : "",
+              // }}
             >
               {billing}
             </span>
@@ -211,9 +212,9 @@ function Sidenav({/*  color */ }) {
           <NavLink to="/rtl">
             <span
               className="icon"
-              style={{
-                background: page === "rtl" ? color : "",
-              }}
+              // style={{
+              //   background: page === "rtl" ? color : "",
+              // }}
             >
               {rtl}
             </span>
@@ -227,9 +228,9 @@ function Sidenav({/*  color */ }) {
           <NavLink to="/profile">
             <span
               className="icon"
-              style={{
-                background: page === "profile" ? color : "",
-              }}
+              // style={{
+              //   background: page === "profile" ? color : "",
+              // }}
             >
               {profile}
             </span>
@@ -252,11 +253,11 @@ function Sidenav({/*  color */ }) {
       <div className="aside-footer">
         <div
           className="footer-box"
-          style={{
-            background: color,
-          }}
+          // style={{
+          //   background: color,
+          // }}
         >
-          <span className="icon" style={{ color }}>
+          <span className="icon" /* style={{ color }} */>
             {dashboard}
           </span>
           <h6>Need Help?</h6>
@@ -265,7 +266,7 @@ function Sidenav({/*  color */ }) {
             DOCUMENTATION
           </Button>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

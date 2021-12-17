@@ -5,6 +5,10 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+        {/* { csrf_token() } */}
+        {/* { @csrf } */}
+        {/* { csrf_field() }*/}
     <App />
   </React.StrictMode>,
   document.getElementById("root")

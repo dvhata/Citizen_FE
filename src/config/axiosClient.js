@@ -6,13 +6,10 @@ import queryString from "query-string";
 // config` for the full list of configs
  
 const axiosClient = axios.create({
+  
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json, text-plain, */*",
-    // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    // "X-Requested-With": "XMLHttpRequest",
-    // "X-CSRF-TOKEN": token
+    'Accept': 'application/json',  
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });

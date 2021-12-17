@@ -12,10 +12,11 @@
 
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Layout, Drawer, Affix } from "antd";
+import { Layout, Drawer, Affix, Table } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
+import Home from "views/Home";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -27,9 +28,9 @@ function Main({  }) {
   const [fixed, setFixed] = useState(false);
 
   const openDrawer = () => setVisible(!visible);
-  // const handleSidenavType = (type) => setSidenavType(type);
-  // const handleSidenavColor = (color) => setSidenavColor(color);
-  // const handleFixedNavbar = (type) => setFixed(type);
+  const handleSidenavType = (type: any) => setSidenavType(type);
+  const handleSidenavColor = (color: any) => setSidenavColor(color);
+  const handleFixedNavbar = (type:any) => setFixed(type);
 
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
@@ -74,7 +75,7 @@ function Main({  }) {
             }`}
             style={{ background: sidenavType }}
           >
-            {/* <Sidenav color={sidenavColor} /> */}
+            <Sidenav /* color={sidenavColor} */ />
           </Sider>
         </Layout>
       </Drawer>
@@ -92,7 +93,8 @@ function Main({  }) {
         }`}
         style={{ background: sidenavType }}
       >
-        {/* <Sidenav color={sidenavColor} /> */}
+   
+        <Sidenav /* color={sidenavColor} */ />
       </Sider>
       <Layout>
         {fixed ? (
@@ -120,7 +122,7 @@ function Main({  }) {
             />
           </AntHeader>
         )}
-        <Content className="content-ant">{/* children */}</Content>
+        <Content className="content-ant"><Home/></Content>
         <Footer />
       </Layout>
     </Layout>

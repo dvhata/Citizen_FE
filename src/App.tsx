@@ -16,28 +16,25 @@ import Rtl from "./views/Rtl";
 import Profile from "./views/Profile";
 import SignUp from "./views/SignUp";
 import SignIn from "./views/SignIn";
-import Main from "./components/layout/Main";
+
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Main from "components/layout/Main";
 
 function App() {
   return (
     <div className="App">
+      <meta name="csrf-token" content="{{ csrf_token() }}" />
       <Router>
         <Routes>
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
-          {/* <Main> */}
-            {" "}
-            <Route path="/dashboard" element={<Home />} />
-            <Route path="/tables" element={<Tables />} />
-            <Route path="/billing" element={<Billing />} />
-            <Route path="/rtl" element={<Rtl />} />
-            <Route path="/profile" element={<Profile />} />
-          {/* </Main> */}
-
-          {/* <Redirect from="*" to="/dashboard" />  */}
+          <Route path="/" element={<Home />} />
+          <Route path="/tables" element={<Tables />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/rtl" element={<Rtl />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>
