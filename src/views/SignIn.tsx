@@ -1,16 +1,5 @@
-/*!
-=========================================================
-* Muse Ant Design Dashboard - v1.0.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -22,7 +11,7 @@ import {
   Input,
   Switch,
 } from "antd";
-// import signinbg from "../assets/images/img-signin.jpg";
+
 import {
   DribbbleOutlined,
   TwitterOutlined,
@@ -30,6 +19,8 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import axiosClient from "config/axiosClient";
+import { User } from "models/User/User";
+import userApi from "api/UserApi";
 function onChange(checked: any) {
   console.log(`switch to ${checked}`);
 }
@@ -117,26 +108,33 @@ const signin = [
 ];
 
 export default function SignIn() {
-  const [email, setEmail] = React.useState("");
+  const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLogin, setLogin] = React.useState();
+  const [userData, setUserData] = React.useState<User>();
+  let navigate = useNavigate()
 
   const onFinish = async () => {
-    const data = { email, password,  };
-    axiosClient
-      .post("/login", { email: email, password: password, _token: "{{ csrf_token() }}", })
-      .then((response: any) => {
-        if (response.data.success === true) {
-          alert("Signin Successfully ");
-        } else {
-          alert(response.data.success);
-        }
-        console.log(response.data.success);
-      });
+    userApi.login(name, password).then((response: User) => {
+      if (response.success === true) {
+        setUserData(response);
+        alert("Signin Successfully ");
+        navigate("/")
+      } else {
+        alert(response.message);
+      }
+    });
   };
+  localStorage.setItem("token", userData?.token as string);
+  localStorage.setItem("permission", userData?.user?.permission as string);
+  let role = userData?.user?.role as number;
+  localStorage.setItem("role", JSON.stringify(role));
+  console.log(localStorage.getItem("role"));
+  console.log(localStorage.getItem("permission"))
+  
 
-  const handleChangeEmail = React.useCallback((e) => {
-    setEmail(e.target.value);
+  const handleChangeName = React.useCallback((e) => {
+    setName(e.target.value);
   }, []);
 
   const handleChangePassword = React.useCallback((e) => {
@@ -150,6 +148,12 @@ export default function SignIn() {
     <>
       <Layout className="layout-default layout-signin">
         <Header>
+          <input
+            type="hidden"
+            name="_token"
+            id="token"
+            value="{{ csrf_token() }}"
+          ></input>
           <div className="header-col header-brand">
             <h5>Citizen V</h5>
           </div>
@@ -194,7 +198,7 @@ export default function SignIn() {
             >
               <Title className="mb-15">Sign In</Title>
               <Title className="font-regular text-muted" level={5}>
-                Enter your email and password to sign in
+                Enter your name and password to sign in
               </Title>
               <Form
                 onFinish={onFinish}
@@ -202,20 +206,18 @@ export default function SignIn() {
                 layout="vertical"
                 className="row-col"
               >
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-
                 <Form.Item
                   className="username"
-                  label="Email"
-                  name="email"
+                  label="Name"
+                  name="Name"
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please input your Name!",
                     },
                   ]}
                 >
-                  <Input onChange={handleChangeEmail} placeholder="Email" />
+                  <Input onChange={handleChangeName} placeholder="Name" />
                 </Form.Item>
 
                 <Form.Item
@@ -229,7 +231,7 @@ export default function SignIn() {
                     },
                   ]}
                 >
-                  <Input
+                  <Input.Password
                     onChange={handleChangePassword}
                     placeholder="Password"
                   />
@@ -259,7 +261,6 @@ export default function SignIn() {
                     Sign Up
                   </Link>
                 </p>
-                ...@csrf
               </Form>
             </Col>
             <Col
@@ -269,7 +270,10 @@ export default function SignIn() {
               lg={{ span: 12 }}
               md={{ span: 12 }}
             >
-              <img src={/* signinbg  */ ""} alt="" />
+              <img
+                src={"https://freesvg.org/img/Vietnam-Map-Flag.png"}
+                alt=""
+              />
             </Col>
           </Row>
         </Content>

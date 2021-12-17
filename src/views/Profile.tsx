@@ -159,6 +159,7 @@ function Profile() {
 
   return (
     <>
+    
       <div
         className="profile-nav-bg"
         style={{ backgroundImage: "url(" + /* BgProfile */ + ")" }}

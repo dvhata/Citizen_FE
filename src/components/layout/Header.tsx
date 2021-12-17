@@ -1,15 +1,3 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 import {
@@ -270,7 +258,7 @@ function Header({
 
   return (
     <>
-      {/* <div className="setting-drwer" onClick={showDrawer}>
+      <div className="setting-drwer" onClick={showDrawer}>
         {setting}
       </div>
       <Row gutter={[24, 0]}>
@@ -279,16 +267,16 @@ function Header({
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
+            {/* <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
               {name.replace("/", "")}
-            </Breadcrumb.Item>
+            </Breadcrumb.Item> */}
           </Breadcrumb>
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
               style={{ textTransform: "capitalize" }}
             >
-              {subName.replace("/", "")}
+              {/* {subName.replace("/", "")} */}
             </span>
           </div>
         </Col>
@@ -310,7 +298,7 @@ function Header({
           <Button
             type="link"
             className="sidebar-toggler"
-            onClick={() => onPress()}
+            // onClick={() => onPress()}
           >
             {toggler}
           </Button>
@@ -319,10 +307,10 @@ function Header({
             mask={true}
             width={360}
             onClose={hideDrawer}
-            placement={placement}
+            // placement={placement}
             visible={visible}
           >
-            <div layout="vertical">
+            {/* <div  layout="vertical" >
               <div className="header-top">
                 <Title level={4}>
                   Configurator
@@ -419,7 +407,7 @@ function Header({
                   </ButtonContainer>
                 </div>
               </div>
-            </div>
+            </div> */}
           </Drawer>
           <Link to="/sign-in" className="btn-sign-in">
             {profile}
@@ -431,7 +419,7 @@ function Header({
             prefix={<SearchOutlined />}
           />
         </Col>
-      </Row> */}
+      </Row>
     </>
   );
 }
