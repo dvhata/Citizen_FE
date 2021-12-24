@@ -1,43 +1,12 @@
 import axiosClient from "../config/axiosClient";
-class UserApi {
-  login = (name?: string, password?: string) => {
-    const url = "/login";
-    return axiosClient
-      .post(url, {
-        name,
-        password,
-      })
-      .then((response) => response.data);
-  };
-
-  register = (
-    token?: string,
-    password?: string,
-    permission?: string,
-    role?: number,
-    area?: string
-  ) => {
-    const url = "/register";
-    return axiosClient
-      .post(
-        url,
-        { password, permission, role, area},
-        {
-          headers: { Authorization: "Bearer " + token },
-        }
-      )
-      .then((response) => response.data);
-  };
-
-  list = (token?: string, role?: number, permission?: string, name?:string) => {
-    const url = "/user/list";
+class ProvinceApi {
+  provinceList = (token?: string, value?: string) => {
+    const url = "/province/list";
     return axiosClient
       .post(
         url,
         {
-          role,
-          permission,
-          name
+          name: value,
         },
         {
           headers: { Authorization: "Bearer " + token },
@@ -46,11 +15,12 @@ class UserApi {
       .then((response) => response.data);
   };
 
-  delete = (token?: string, permission?: any) => {
-    const url = "/user/" + permission;
+  provinceRegist = (token?: string, name?: string, id?: string) => {
+    const url = "/province";
     return axiosClient
-      .delete(
+      .post(
         url,
+        { name, id },
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -58,29 +28,36 @@ class UserApi {
       .then((response) => response.data);
   };
 
-  // provinceDelete = (token?: string, id?: any) => {
-  //   const url = "/province/" + id;
-  //   return axiosClient
-  //     .delete(
-  //       url,
-  //       {
-  //         headers: { Authorization: "Bearer " + token },
-  //       }
-  //     )
-  //     .then((response) => response.data);
-  // };
+  provinceDelete = (token?: string, id?: any) => {
+    const url = "/province/" + id;
+    return axiosClient
+      .delete(url, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((response) => response.data);
+  };
 
-  // provinceUpdate = (token?: string, id?: any) => {
-  //   const url = "/province/" + id;
-  //   return axiosClient
-  //     .put(
-  //       url,{},
-  //       {
-  //         headers: { Authorization: "Bearer " + token },
-  //       }
-  //     )
-  //     .then((response) => response.data);
-  // };
+  provinceUpdate = (
+    token?: string,
+    permission?: any,
+    name?: string,
+    id?: string
+  ) => {
+    const url = "/province/" + permission;
+    return axiosClient
+      .put(
+        url,
+        {
+          name,
+          id,
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
+      .then((response) => response.data);
+  };
+
   //     list = (params?: any) => {
   //         const url = "/apartments";
   //         return axiosClient.get(url, {
@@ -162,5 +139,5 @@ class UserApi {
   //   };
 }
 
-const userApi = new UserApi();
-export default userApi;
+const provinceApi = new ProvinceApi();
+export default provinceApi;
