@@ -14,7 +14,6 @@ import Tables from "./views/Tables";
 import Billing from "./views/Billing";
 import Rtl from "./views/Rtl";
 import Profile from "./views/Profile";
-import SignUp from "./views/SignUp";
 import SignIn from "./views/SignIn";
 
 import "./assets/styles/main.css";
@@ -28,7 +27,6 @@ function App() {
       <meta name="csrf-token" content="{{ csrf_token() }}" />
       <Router>
         <Routes>
-          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/" element={<Home />} />
           <Route path="/tables" element={<Tables />} />

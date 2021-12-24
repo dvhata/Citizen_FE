@@ -1,6 +1,7 @@
 import { ProvinceData } from "./ProvinceData";
 
 export interface Province {
-  status?: boolean;
+  success?: boolean;
+  message?: boolean;
   provinces?: ProvinceData[];
 }

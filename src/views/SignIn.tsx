@@ -129,8 +129,6 @@ export default function SignIn() {
   localStorage.setItem("permission", userData?.user?.permission as string);
   let role = userData?.user?.role as number;
   localStorage.setItem("role", JSON.stringify(role));
-  console.log(localStorage.getItem("role"));
-  console.log(localStorage.getItem("permission"))
   
 
   const handleChangeName = React.useCallback((e) => {
@@ -160,7 +158,7 @@ export default function SignIn() {
           <div className="header-col header-nav">
             <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
-                <Link to="/dashboard">
+                <Link to="/">
                   {template}
                   <span> Dashboard</span>
                 </Link>
@@ -172,10 +170,7 @@ export default function SignIn() {
                   </Link>
                 </Menu.Item> */}
               <Menu.Item key="3">
-                <Link to="/sign-up">
-                  {signup}
-                  <span> Sign Up</span>
-                </Link>
+                
               </Menu.Item>
               <Menu.Item key="4">
                 <Link to="/sign-in">
@@ -255,12 +250,6 @@ export default function SignIn() {
                     SIGN IN
                   </Button>
                 </Form.Item>
-                <p className="font-semibold text-muted">
-                  Don't have an account?{" "}
-                  <Link to="/sign-up" className="text-dark font-bold">
-                    Sign Up
-                  </Link>
-                </p>
               </Form>
             </Col>
             <Col

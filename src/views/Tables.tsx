@@ -1,659 +1,482 @@
-/*!
-=========================================================
-* Muse Ant Design Dashboard - v1.0.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 import {
-  Row,
-  Col,
-  Card,
-  Radio,
-  Table,
-  Upload,
-  message,
-  Progress,
+  Affix,
+  Alert,
   Button,
-  Avatar,
+  Card,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  InputNumber,
+  Layout,
+  message,
+  Modal,
+  Progress,
+  Result,
+  Row,
+  Select,
+  Space,
+  Tag,
   Typography,
 } from "antd";
+import { Footer, Header } from "antd/lib/layout/layout";
+import Paragraph from "antd/lib/typography/Paragraph";
+import provinceApi from "api/ProvinceApi";
+import Sidenav from "components/layout/Sidenav";
+import { Province } from "models/Province/Province";
+import { User } from "models/User/User";
+import { useEffect, useState } from "react";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
-import { ToTopOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-
-// Images
-// import ava1 from "../assets/images/logo-shopify.svg";
-// import ava2 from "../assets/images/logo-atlassian.svg";
-// import ava3 from "../assets/images/logo-slack.svg";
-// import ava5 from "../assets/images/logo-jira.svg";
-// import ava6 from "../assets/images/logo-invision.svg";
-// import face from "../assets/images/face-1.jpg";
-// import face2 from "../assets/images/face-2.jpg";
-// import face3 from "../assets/images/face-3.jpg";
-// import face4 from "../assets/images/face-4.jpg";
-// import face5 from "../assets/images/face-5.jpeg";
-// import face6 from "../assets/images/face-6.jpeg";
-// import pencil from "../assets/images/pencil.svg";
-
-const { Title } = Typography;
-
-const formProps = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info: any) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
-// table code start
-const columns = [
-  {
-    title: "AUTHOR",
-    dataIndex: "name",
-    key: "name",
-    width: "32%",
-  },
-  {
-    title: "FUNCTION",
-    dataIndex: "function",
-    key: "function",
-  },
-
-  {
-    title: "STATUS",
-    key: "status",
-    dataIndex: "status",
-  },
-  {
-    title: "EMPLOYED",
-    key: "employed",
-    dataIndex: "employed",
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            // src={face2}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>Michael John</Title>
-            <p>michael@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Manager</Title>
-          <p>Organization</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button type="primary" className="tag-primary">
-          ONLINE
-        </Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>23/04/18</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-
-  {
-    key: "2",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            // src={face3}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>Alexa Liras</Title>
-            <p>alexa@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Programator</Title>
-          <p>Developer</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button className="tag-badge">ONLINE</Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>23/12/20</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-
-  {
-    key: "3",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            // src={face}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>Laure Perrier</Title>
-            <p>laure@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Executive</Title>
-          <p>Projects</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button type="primary" className="tag-primary">
-          ONLINE
-        </Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>03/04/21</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "4",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            // src={face4}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>Miriam Eric</Title>
-            <p>miriam@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Marketing</Title>
-          <p>Organization</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button type="primary" className="tag-primary">
-          ONLINE
-        </Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>03/04/21</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "5",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            // src={face5}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>Richard Gran</Title>
-            <p>richard@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Manager</Title>
-          <p>Organization</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button className="tag-badge">ONLINE</Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>23/03/20</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-
-  {
-    key: "6",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            //src</Avatar.Group>/={face6}
-          ></Avatar>
-          <div className="avatar-info">
-            <Title level={5}>John Levi</Title>
-            <p>john@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Tester</Title>
-          <p>Developer</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button className="tag-badge">ONLINE</Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>14/04/17</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-];
-// project table start
-const project = [
-  {
-    title: "COMPANIES",
-    dataIndex: "name",
-    width: "32%",
-  },
-  {
-    title: "BUDGET",
-    dataIndex: "age",
-  },
-  {
-    title: "STATUS",
-    dataIndex: "address",
-  },
-  {
-    title: "COMPLETION",
-    dataIndex: "completion",
-  },
-];
-const dataproject: any = [
-  // {
-  //   key: "1",
-
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" /src</Avatar.Group>/={ava1} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}>Spotify Version</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">$14,000</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">working</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress percent={30} size="small" />
-  //         <span>
-  //           <Link to="/">
-  //             <img /src</Avatar.Group>/={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
- 
-
-  // {
-  //   key: "2",
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" src={ava2} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}>Progress Track</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">$3,000</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">working</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress percent={10} size="small" />
-  //         <span>
-  //           <Link to="/">
-  //             <img src={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
-  // },
-
-  // {
-  //   key: "3",
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" src={ava3} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}> Jira Platform Errors</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">Not Set</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">done</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress percent={100} size="small" format={() => "done"} />
-  //         <span>
-  //           <Link to="/">
-  //             <img src={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
-  // },
-
-  // {
-  //   key: "4",
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" src={ava5} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}> Launch new Mobile App</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">$20,600</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">canceled</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress
-  //           percent={50}
-  //           size="small"
-  //           status="exception"
-  //           format={() => "50%"}
-  //         />
-  //         <span>
-  //           <Link to="/">
-  //             <img src={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
-  // },
-
-  // {
-  //   key: "5",
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" src={ava5} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}>Web Dev</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">$4,000</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">working</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress percent={80} size="small" />
-  //         <span>
-  //           <Link to="/">
-  //             <img src={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
-  // },
-
-  // {
-  //   key: "6",
-  //   name: (
-  //     <>
-  //       <Avatar.Group>
-  //         <Avatar className="shape-avatar" src={ava6} size={25} alt="" />
-  //         <div className="avatar-info">
-  //           <Title level={5}>Redesign Online Store</Title>
-  //         </div>
-  //       </Avatar.Group>
-  //     </>
-  //   ),
-  //   age: (
-  //     <>
-  //       <div className="semibold">$2,000</div>
-  //     </>
-  //   ),
-  //   address: (
-  //     <>
-  //       <div className="text-sm">canceled</div>
-  //     </>
-  //   ),
-  //   completion: (
-  //     <>
-  //       <div className="ant-progress-project">
-  //         <Progress percent={0} size="small" />
-  //         <span>
-  //           <Link to="/">
-  //             <img src={pencil} alt="" />
-  //           </Link>
-  //         </span>
-  //       </div>
-  //     </>
-  //   ),
-  // },
-];
+const { Header: AntHeader, Content, Sider } = Layout;
 
 function Tables() {
-  const onChange = (e: any) => console.log(`radio checked:${e.target.value}`);
+  const { Title, Text } = Typography;
+  const { Search } = Input;
+
+  // const onChange = (e: any) => console.log(`radio checked:${e.target.value}`);
+
+  const [reverse, setReverse] = useState(false);
+
+  const [visible, setVisible] = useState(false);
+  const [placement, setPlacement] = useState("right");
+  const [sidenavColor, setSidenavColor] = useState("#1890ff");
+  const [sidenavType, setSidenavType] = useState("transparent");
+  const [fixed, setFixed] = useState(false);
+
+  const openDrawer = () => setVisible(!visible);
+  const handleSidenavType = (type: any) => setSidenavType(type);
+  const handleSidenavColor = (color: any) => setSidenavColor(color);
+  const handleFixedNavbar = (type: any) => setFixed(type);
+
+  let { pathname } = useLocation();
+  pathname = pathname.replace("/", "");
+
+  useEffect(() => {
+    if (pathname === "rtl") {
+      setPlacement("left");
+    } else {
+      setPlacement("right");
+    }
+  }, [pathname]);
+
+  const [id, setId] = React.useState("");
+  const [name, setName] = React.useState("");
+  // const [start_at, setStartAt] = React.useState("");
+  // const [end_at, setEndAt] = React.useState("");
+  const [permission, setPermission] = React.useState(
+    localStorage.getItem("permission")
+  );
+  const [isLogin, setLogin] = React.useState();
+  const [userData, setUserData] = React.useState<User>();
+  const [provinceList, setProvinceList] = React.useState<Province>();
+
+  const { Option } = Select;
+  const { RangePicker } = DatePicker;
+
+  React.useEffect(() => {
+    const fetchData = () => {
+      provinceApi.provinceList(token as string).then((response) => {
+        setProvinceList(response);
+      });
+    };
+    fetchData();
+  }, []);
+
+  //Form register
+  let token = localStorage.getItem("token");
+  let role_temp = localStorage.getItem("role");
+  let role: number;
+  if (typeof role_temp === "string") {
+    role = JSON.parse(localStorage.getItem("role") as string);
+  }
+
+  const handleChangeProvinceId = React.useCallback((e) => {
+    setId(e.target.value);
+  }, []);
+
+  const handleChangeProvinceName = React.useCallback((e) => {
+    setName(e.target.value);
+  }, []);
+
+  const onFinish = async () => {
+    provinceApi
+      .provinceRegist(token as string, name as string, id as string)
+      .then((response) => {
+        if (response.success === true) {
+          alert(" Successfully ");
+          window.location.reload();
+        } else {
+          alert(response.message);
+        }
+      });
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  // log out
+  const handleLogOut = React.useCallback((e) => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  }, []);
+
+  //search
+  const onSearch = async (value: string) => {
+    provinceApi
+      .provinceList(token as string, value as string)
+      .then((response: Province) => {
+        if (response.success === true) {
+          setProvinceList(response);
+        } else {
+          alert(response.message);
+        }
+      });
+  };
+
+  // delete
+  const onDelete = async (e: any) => {
+    alert("Are you sure you want to delete this");
+    provinceApi
+      .provinceDelete(token as string, e.target.value as string)
+      .then((response: Province) => {
+        setProvinceList(response);
+        window.location.reload();
+      });
+  };
+
+  // update modal
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModalUpdate = (e: any) => {
+    console.log(e.target.value);
+    setIsModalVisible(true);
+  };
+
+  const handleOkUpdate = async (e: any) => {
+    console.log(e);
+    provinceApi
+      .provinceUpdate(
+        token as string,
+        e as string,
+        name as string,
+        id as string
+      )
+      .then((response: Province) => {
+        if (response.success === true) {
+          setProvinceList(response);
+        } else {
+          alert(response.message);
+        }
+
+        // window.location.reload();
+      });
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <>
-      <div className="tabled">
-        <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
-            <Card
-              bordered={false}
-              className="criclebox tablespace mb-24"
-              title="Authors Table"
-              extra={
-                <>
-                  <Radio.Group onChange={onChange} defaultValue="a">
-                    <Radio.Button value="a">All</Radio.Button>
-                    <Radio.Button value="b">ONLINE</Radio.Button>
-                  </Radio.Group>
-                </>
-              }
+      {!token && (
+        <Result
+          status="403"
+          title="Bạn chưa đăng nhập"
+          subTitle="Sorry, you are not authorized to access this page."
+          extra={
+            <Button type="primary" key="console">
+              <Link to={"/sign-in"}>đăng nhập </Link>
+            </Button>
+          }
+        />
+      )}
+      {token && (
+        <>
+          {" "}
+          <Layout
+            className={`layout-dashboard ${
+              pathname === "profile" ? "layout-profile" : ""
+            } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
+          >
+            <Drawer
+              title={false}
+              placement={placement === "right" ? "left" : "right"}
+              closable={false}
+              onClose={() => setVisible(false)}
+              visible={visible}
+              key={placement === "right" ? "left" : "right"}
+              width={250}
+              className={`drawer-sidebar ${
+                pathname === "rtl" ? "drawer-sidebar-rtl" : ""
+              } `}
             >
-              <div className="table-responsive">
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  className="ant-border-space"
-                />
-              </div>
-            </Card>
+              <Layout
+                className={`layout-dashboard ${
+                  pathname === "rtl" ? "layout-dashboard-rtl" : ""
+                }`}
+              >
+                <Sider
+                  trigger={null}
+                  width={250}
+                  theme="light"
+                  className={`sider-primary ant-layout-sider-primary ${
+                    sidenavType === "#fff" ? "active-route" : ""
+                  }`}
+                  style={{ background: sidenavType }}
+                >
+                  <Sidenav /* color={sidenavColor} */ />
+                </Sider>
+              </Layout>
+            </Drawer>
+            <Sider
+              breakpoint="lg"
+              collapsedWidth="0"
+              onCollapse={(collapsed, type) => {
+                // console.log(collapsed, type);
+              }}
+              trigger={null}
+              width={250}
+              theme="light"
+              className={`sider-primary ant-layout-sider-primary ${
+                sidenavType === "#fff" ? "active-route" : ""
+              }`}
+              style={{ background: sidenavType }}
+            >
+              <Sidenav /* color={sidenavColor} */ />
+            </Sider>
+            <Layout>
+              <Affix>
+                <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
+                  Header here
+                  <Button onClick={handleLogOut}>Log out</Button>
+                  <Header
+                  // onPress={openDrawer}
+                  // name={pathname}
+                  // subName={pathname}
+                  // handleSidenavColor={handleSidenavColor}
+                  // handleSidenavType={handleSidenavType}
+                  // handleFixedNavbar={handleFixedNavbar}
+                  />
+                </AntHeader>
+              </Affix>
 
-            <Card
-              bordered={false}
-              className="criclebox tablespace mb-24"
-              title="Projects Table"
-              extra={
-                <>
-                  <Radio.Group onChange={onChange} defaultValue="all">
-                    <Radio.Button value="all">All</Radio.Button>
-                    <Radio.Button value="online">ONLINE</Radio.Button>
-                    <Radio.Button value="store">STORES</Radio.Button>
-                  </Radio.Group>
-                </>
-              }
-            >
-              <div className="table-responsive">
-                <Table
-                  columns={project}
-                  dataSource={dataproject}
-                  pagination={false}
-                  className="ant-border-space"
-                />
-              </div>
-              <div className="uploadfile pb-15 shadow-none">
-                <Upload {...formProps}>
-                  <Button
-                    type="dashed"
-                    className="ant-full-box"
-                    icon={<ToTopOutlined />}
-                  >
-                    Click to Upload
-                  </Button>
-                </Upload>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-      </div>
+              <Content className="content-ant">
+                <div className="layout-content">
+                  <Row gutter={[24, 0]}>
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={12}
+                      lg={12}
+                      xl={16}
+                      className="mb-24"
+                    >
+                      <Card
+                        bordered={false}
+                        className="criclebox cardbody h-full"
+                      >
+                        <div className="project-ant">
+                          <div>
+                            <Title level={5}>Tỉnh/Thành phố đã cấp mã</Title>
+                            <Paragraph className="lastweek">
+                              Tổng số:
+                              <span className="blue">
+                                {provinceList?.provinces?.length} / 63
+                              </span>
+                            </Paragraph>
+                          </div>
+                          <div className="ant-filtertabs">
+                            <Search
+                              placeholder="Nhập Tỉnh/ Thành phố"
+                              allowClear
+                              enterButton="Search"
+                              onSearch={onSearch}
+                            />
+                          </div>
+                        </div>
+                        <div className="ant-list-box table-responsive">
+                          <table className="width-100">
+                            <thead>
+                              <tr>
+                                <th>MÃ</th>
+                                <th>TỈNH/THÀNH PHỐ</th>
+                                <th>TIẾN ĐỘ NHẬP LIỆU</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {provinceList?.provinces?.map((d, index) => (
+                                <tr key={index}>
+                                  <Modal
+                                    title="Chỉnh sửa thông tin"
+                                    visible={isModalVisible}
+                                    onOk={() => handleOkUpdate(d.id)}
+                                    onCancel={handleCancel}
+                                  >
+                                    <Form
+                                      onFinish={onFinish}
+                                      onFinishFailed={onFinishFailed}
+                                      layout="vertical"
+                                      className="row-col"
+                                    >
+                                      <Form.Item
+                                        className="username"
+                                        label="Province Id"
+                                        name="Province Id"
+                                        initialValue={d.id}
+                                      >
+                                        <Input
+                                          onChange={handleChangeProvinceId}
+                                        />
+                                      </Form.Item>
+
+                                      <Form.Item
+                                        className="username"
+                                        label="Province Name"
+                                        name="Province Name"
+                                        initialValue={d.name}
+                                      >
+                                        <Input
+                                          onChange={handleChangeProvinceName}
+                                        />
+                                      </Form.Item>
+                                    </Form>
+                                  </Modal>
+
+                                  <td>{d.id}</td>
+                                  <td>
+                                    <h6>
+                                      <img
+                                        src={d.name}
+                                        alt=""
+                                        className="avatar-sm"
+                                      />{" "}
+                                      {d.name}
+                                    </h6>
+                                  </td>
+                                  <td>
+                                    <>
+                                      <Progress percent={100} />
+                                      {/* <Progress
+                                        
+                                          percent={50}
+                                          status="active"
+                                        /> */}
+                                    </>
+                                  </td>
+                                  <td>
+                                    <div className="percent-progress">
+                                      <button value={d.id} onClick={onDelete}>
+                                        Delete
+                                      </button>
+
+                                      <button
+                                        value={d.id}
+                                        onClick={showModalUpdate}
+                                      >
+                                        Update
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </Card>
+                    </Col>
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={12}
+                      lg={12}
+                      xl={8}
+                      className="mb-24"
+                    >
+                      <Card bordered={false} className="criclebox h-full">
+                        <div className="timeline-box">
+                          <Title level={5}>
+                            {" "}
+                            Khai báo và cấp mã cho 63 tỉnh/thành phố
+                          </Title>
+                          <Title className="font-regular text-muted" level={5}>
+                            {/* Titlesub */}
+                          </Title>
+                          <Form
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            layout="vertical"
+                            className="row-col"
+                          >
+                            <Form.Item
+                              className="username"
+                              label="Province Id"
+                              name="Province Id"
+                              rules={[
+                                {
+                                  required: true,
+                                  message:
+                                    "Please input your Province Id! from 01-63",
+                                },
+                              ]}
+                            >
+                              <Input
+
+                                onChange={handleChangeProvinceId}
+                                placeholder="Enter your Province Id"
+                              />
+                              <Tag
+                                icon={<CheckCircleOutlined />}
+                                color="success"
+                              >
+                                success
+                              </Tag>
+                            </Form.Item>
+
+                            <Form.Item
+                              className="username"
+                              label="Province Name"
+                              name="Province Name"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input your Province Name!",
+                                },
+                              ]}
+                            >
+                              <Input
+                                onChange={handleChangeProvinceName}
+                                placeholder="Enter your Province Name"
+                              />
+                            </Form.Item>
+
+                            <Form.Item>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "100%" }}
+                              >
+                                Cấp mã
+                              </Button>
+                            </Form.Item>
+                          </Form>
+                        </div>
+                      </Card>
+                    </Col>
+                  </Row>
+                </div>
+              </Content>
+              <Footer />
+            </Layout>
+          </Layout>
+        </>
+      )}
     </>
   );
 }
