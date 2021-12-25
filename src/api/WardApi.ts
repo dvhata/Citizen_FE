@@ -1,11 +1,12 @@
 import axiosClient from "../config/axiosClient";
-class ProvinceApi {
-  provinceList = (token?: string, value?: string) => {
-    const url = "/province/list";
+class WardApi {
+  wardList = (token?: string, permission?: string, value?: string) => {
+    const url = "/ward/list";
     return axiosClient
       .post(
         url,
         {
+          permission,
           name: value,
         },
         {
@@ -15,12 +16,17 @@ class ProvinceApi {
       .then((response) => response.data);
   };
 
-  provinceRegist = (token?: string, name?: string, id?: string) => {
-    const url = "/province";
+  wardRegist = (
+    token?: string,
+    permission?: string,
+    name?: string,
+    id?: string
+  ) => {
+    const url = "/ward";
     return axiosClient
       .post(
         url,
-        { name, id },
+        { permission, name, id },
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -28,8 +34,8 @@ class ProvinceApi {
       .then((response) => response.data);
   };
 
-  provinceDelete = (token?: string, id?: any) => {
-    const url = "/province/" + id;
+  wardDelete = (token?: string, id?: any) => {
+    const url = "/ward/" + id;
     return axiosClient
       .delete(url, {
         headers: { Authorization: "Bearer " + token },
@@ -37,13 +43,13 @@ class ProvinceApi {
       .then((response) => response.data);
   };
 
-  provinceUpdate = (
+  wardUpdate = (
     token?: string,
     permission?: any,
     name?: string,
     id?: string
   ) => {
-    const url = "/province/" + permission;
+    const url = "/ward/" + permission;
     return axiosClient
       .put(
         url,
@@ -57,8 +63,7 @@ class ProvinceApi {
       )
       .then((response) => response.data);
   };
- 
 }
 
-const provinceApi = new ProvinceApi();
-export default provinceApi;
+const wardApi = new WardApi();
+export default wardApi;

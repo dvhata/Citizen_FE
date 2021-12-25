@@ -107,19 +107,23 @@ const signin = [
   </svg>,
 ];
 
+
+
 export default function SignIn() {
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLogin, setLogin] = React.useState();
   const [userData, setUserData] = React.useState<User>();
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const onFinish = async () => {
     userApi.login(name, password).then((response: User) => {
       if (response.success === true) {
         setUserData(response);
+        console.log(response);
         alert("Signin Successfully ");
-        navigate("/")
+        navigate("/add-admin");
+        window.location.reload();
       } else {
         alert(response.message);
       }
@@ -129,7 +133,9 @@ export default function SignIn() {
   localStorage.setItem("permission", userData?.user?.permission as string);
   let role = userData?.user?.role as number;
   localStorage.setItem("role", JSON.stringify(role));
-  
+  localStorage.setItem("start_at",userData?.user?.start_at as any);
+  localStorage.setItem("end_at",userData?.user?.end_at as any);
+  localStorage.setItem("is_active",userData?.user?.is_active as any);
 
   const handleChangeName = React.useCallback((e) => {
     setName(e.target.value);
@@ -169,9 +175,7 @@ export default function SignIn() {
                     <span>Profile</span>
                   </Link>
                 </Menu.Item> */}
-              <Menu.Item key="3">
-                
-              </Menu.Item>
+              <Menu.Item key="3"></Menu.Item>
               <Menu.Item key="4">
                 <Link to="/sign-in">
                   {signin}

@@ -21,7 +21,7 @@ class UserApi {
     return axiosClient
       .post(
         url,
-        { password, permission, role, area},
+        { password, permission, role, area },
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -29,7 +29,12 @@ class UserApi {
       .then((response) => response.data);
   };
 
-  list = (token?: string, role?: number, permission?: string, name?:string) => {
+  list = (
+    token?: string,
+    role?: number,
+    permission?: string,
+    name?: string
+  ) => {
     const url = "/user/list";
     return axiosClient
       .post(
@@ -37,7 +42,7 @@ class UserApi {
         {
           role,
           permission,
-          name
+          name,
         },
         {
           headers: { Authorization: "Bearer " + token },
@@ -49,8 +54,34 @@ class UserApi {
   delete = (token?: string, permission?: any) => {
     const url = "/user/" + permission;
     return axiosClient
-      .delete(
+      .delete(url, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((response) => response.data);
+  };
+
+  update = (
+    token?: string,
+    // id?: string,
+    permission?: any,
+    role?: number,
+    start_at?: any,
+    end_at?: any,
+    is_active?: boolean,
+    area?: string,
+  ) => {
+    const url = "/user/update/" + permission;
+    return axiosClient
+      .post(
         url,
+        {
+          permission,
+          role,
+          start_at,
+          end_at,
+          is_active,
+          area
+        },
         {
           headers: { Authorization: "Bearer " + token },
         }
