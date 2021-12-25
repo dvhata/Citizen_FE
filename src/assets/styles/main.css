@@ -3034,8 +3034,6 @@ button.ant-btn.ant-btn-dashed.ant-full-box svg {
 .ant-btn-dashed.active,
 .ant-btn-dashed:active {
   color: #096dd9;
-  background-color: #fff;
-  border-color: #096dd9;
 }
 
 section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
@@ -3045,4 +3043,19 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   svg
   path {
   fill: #8c8c8c;
+}
+
+.button {
+  background-color: white;
+  border-radius: 5px;
+  background-color: #fff;
+  border-color: rgba(98, 169, 226, 0.966);
+  width: 40%;
+  margin-right: 5%;
+}
+
+.button:hover {
+  background-color: rgba(100, 182, 250, 0.966);
+  color: white;
+  border-color: rgba(0, 0, 0, 0.37);
 }

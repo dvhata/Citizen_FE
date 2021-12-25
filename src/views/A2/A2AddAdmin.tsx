@@ -372,11 +372,12 @@ function A2AddAdmin() {
                                   </td>
                                   <td>
                                     <div className="percent-progress">
-                                      <button value={d.id} onClick={onDelete}>
+                                      <button className="button" value={d.id} onClick={onDelete}>
                                         Delete
                                       </button>
 
                                       <button
+                                      className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >

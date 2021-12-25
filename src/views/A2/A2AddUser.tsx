@@ -86,7 +86,6 @@ function A2AddUser() {
   let startAt = localStorage.getItem("start_at");
   let endAt = localStorage.getItem("end_at");
   let isActive = localStorage.getItem("is_active");
- 
 
   const { Option } = Select;
   const { RangePicker } = DatePicker;
@@ -233,9 +232,10 @@ function A2AddUser() {
         if (response.success === true) {
           setUserList(response);
           alert("Successfully");
+          window.location.reload();
         } else {
-          // window.location.reload();
           alert(response.message);
+          window.location.reload();
         }
       });
     setIsModalVisible(false);
@@ -371,7 +371,7 @@ function A2AddUser() {
                             <Paragraph className="lastweek">
                               Tổng số:
                               <span className="blue">
-                                {userList?.users?.length} / 63
+                                {userList?.users?.length} / {districtList?.districts?.length}
                               </span>
                             </Paragraph>
                           </div>
@@ -389,7 +389,7 @@ function A2AddUser() {
                             <thead>
                               <tr>
                                 <th>USERNAME</th>
-                                <th>District</th>
+                                <th>DISTRICT</th>
                                 <th>RANGE</th>
                                 <th>STATUS</th>
                                 <th></th>
@@ -422,12 +422,14 @@ function A2AddUser() {
                                   <td>
                                     <div className="percent-progress">
                                       <button
+                                      className="button"
                                         value={d.permission}
                                         onClick={onDelete}
                                       >
                                         Delete
                                       </button>
                                       <button
+                                      className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >

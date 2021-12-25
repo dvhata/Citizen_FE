@@ -364,7 +364,7 @@ import {
                                     </td>
                                     <td>
                                       <div className="percent-progress">
-                                        <button value={d.id} onClick={onDelete}>
+                                        <button className="button" value={d.id} onClick={onDelete}>
                                           Delete
                                         </button>
   

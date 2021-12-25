@@ -311,7 +311,7 @@ function A1AddUser() {
                         </td>
                         <td>
                           <div className="percent-progress">
-                            <button value={d.permission} onClick={onDelete}>
+                            <button className="button" value={d.permission} onClick={onDelete}>
                               Delete
                             </button>
                             <button
