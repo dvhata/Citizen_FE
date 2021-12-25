@@ -9,10 +9,10 @@ import {
   Input,
   Layout,
   message,
+  Modal,
   Result,
   Row,
   Select,
-  Space,
   Switch,
   Typography,
 } from "antd";
@@ -21,16 +21,17 @@ import Paragraph from "antd/lib/typography/Paragraph";
 import provinceApi from "api/ProvinceApi";
 import userApi from "api/UserApi";
 import Sidenav from "components/layout/Sidenav";
-import { Province } from "models/Province/Province";
 import { User } from "models/User/User";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { District } from "models/District/District";
+import districtApi from "api/DistrictApi";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
-function Home() {
+function A2AddUser() {
   const { Title, Text } = Typography;
   const { Search } = Input;
 
@@ -62,16 +63,19 @@ function Home() {
 
   const [name, setName] = React.useState("");
   const [area, setArea] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [start_at, setStartAt] = React.useState("");
-  const [end_at, setEndAt] = React.useState("");
+  const [password, setPassword] = React.useState();
+  const [start_at, setStartAt] = React.useState<Date>();
+  const [end_at, setEndAt] = React.useState<Date>();
   const [permission, setPermission] = React.useState(
     localStorage.getItem("permission")
   );
+
+  const [status, setStatus] = React.useState<boolean>();
   const [isLogin, setLogin] = React.useState();
   const [userData, setUserData] = React.useState<User>();
-  const [provinceList, setProvinceList] = React.useState<Province>();
+  const [districtList, setDistrictList] = React.useState<District>();
   const [userList, setUserList] = React.useState<User>();
+  const dateFormat = "YYYY-MM-DD";
 
   let token = localStorage.getItem("token");
   let role_temp = localStorage.getItem("role");
@@ -79,15 +83,21 @@ function Home() {
   if (typeof role_temp === "string") {
     role = JSON.parse(localStorage.getItem("role") as string);
   }
+  let startAt = localStorage.getItem("start_at");
+  let endAt = localStorage.getItem("end_at");
+  let isActive = localStorage.getItem("is_active");
+ 
 
   const { Option } = Select;
   const { RangePicker } = DatePicker;
 
   React.useEffect(() => {
     const fetchData = () => {
-      provinceApi.provinceList(token as string).then((response) => {
-        setProvinceList(response);
-      });
+      districtApi
+        .districtList(token as string, permission as string)
+        .then((response) => {
+          setDistrictList(response);
+        });
       userApi
         .list(token as string, role as number, permission as string)
         .then((response) => {
@@ -98,12 +108,12 @@ function Home() {
   }, []);
 
   //Form register
-  const handleSelectProvince = async (e: any) => {
+  const handleSelectDistrict = async (e: any) => {
     setPermission(e);
     setName(e);
-    provinceList?.provinces?.map((province) => {
-      if (province?.id === e) {
-        setArea(province.name as string);
+    districtList?.districts?.map((district) => {
+      if (district?.id === e) {
+        setArea(district.name as string);
       }
     });
   };
@@ -113,8 +123,8 @@ function Home() {
   }, []);
 
   const handleChangeDate = React.useCallback((e) => {
-    setStartAt(moment(e.at(0)).format("YYYY/MM/DD"));
-    setEndAt(moment(e.at(1)).format("YYYY/MM/DD"));
+    setStartAt(moment(e.at(0)).format("YYYY/MM/DD") as any);
+    setEndAt(moment(e.at(1)).format("YYYY/MM/DD") as any);
   }, []);
 
   const onFinishFailed = (errorInfo: any) => {
@@ -169,6 +179,91 @@ function Home() {
         }
       });
   };
+
+  // modal update
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [initialModalUserName, setInitialModalModalUserName] =
+    React.useState("");
+  const [initialModalUserArea, setInitialModalModalUserArea] =
+    React.useState("");
+  // const [initialModalUserStartAt, setInitialModalModalUserStartAt] =
+  //   React.useState();
+  // const [initialModalUserEndAt, setInitialModalModalUserEndAt] =
+  //   React.useState();
+  const [initialModalUserStatus, setInitialModalModalUserStatus] =
+    React.useState<boolean>();
+
+  const [permissionModal, setPermissionModal] = React.useState("");
+
+  const showModalUpdate = async (e: any) => {
+    setPermissionModal(e.target.value);
+    console.log(e.target.value);
+    userList?.users?.map((user) => {
+      if (e.target.value === user.permission) {
+        console.log(user);
+        setInitialModalModalUserName(user.permission as string);
+        setInitialModalModalUserArea(user.area as string);
+        // setInitialModalModalUserStartAt(user.start_at as any);
+        // setInitialModalModalUserEndAt(user.end_at as any);
+        setInitialModalModalUserStatus(user.is_active as boolean);
+        setArea(user.area as string);
+        setStartAt(startAt as any);
+        setEndAt(endAt as any);
+        setStatus(user.is_active as boolean);
+      }
+    });
+    setIsModalVisible(true);
+  };
+
+  const handleOkUpdate = async () => {
+    let id, is_active, password: any;
+    userApi
+      .update(
+        token as string,
+        // (id = idModal),
+        permissionModal as string,
+        role as number,
+        start_at as any,
+        end_at as any,
+        (is_active = status),
+        area as string
+      )
+      .then((response: User) => {
+        if (response.success === true) {
+          setUserList(response);
+          alert("Successfully");
+        } else {
+          // window.location.reload();
+          alert(response.message);
+        }
+      });
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    window.location.reload();
+  };
+
+  function disableDateRanges(range: any) {
+    const { startDate, endDate } = range;
+    return function disabledDate(current: any) {
+      let startCheck = true;
+      let endCheck = true;
+      if (startDate) {
+        startCheck = current && current < moment(startDate, "YYYY-MM-DD");
+      }
+      if (endDate) {
+        endCheck = current && current > moment(endDate, "YYYY-MM-DD");
+      }
+      return (startDate && startCheck) || (endDate && endCheck);
+    };
+  }
+
+  function handleChangeStatus(checked: boolean) {
+    setStatus(checked);
+  }
 
   return (
     <>
@@ -271,7 +366,7 @@ function Home() {
                         <div className="project-ant">
                           <div>
                             <Title level={5}>
-                              Tài khoản đã cấp (Tỉnh/Thành phố )
+                              Tài khoản đã cấp (Quận/huyện)
                             </Title>
                             <Paragraph className="lastweek">
                               Tổng số:
@@ -282,7 +377,7 @@ function Home() {
                           </div>
                           <div className="ant-filtertabs">
                             <Search
-                              placeholder="Enter Province Username"
+                              placeholder="Enter District Username"
                               allowClear
                               enterButton="Search"
                               onSearch={onSearch}
@@ -294,7 +389,8 @@ function Home() {
                             <thead>
                               <tr>
                                 <th>USERNAME</th>
-                                <th>PROVINCE</th>
+                                <th>District</th>
+                                <th>RANGE</th>
                                 <th>STATUS</th>
                                 <th></th>
                               </tr>
@@ -314,6 +410,9 @@ function Home() {
                                     </h6>
                                   </td>
                                   <td>
+                                    {d.start_at} - {d.end_at}
+                                  </td>
+                                  <td>
                                     <Switch
                                       checked={
                                         d.is_active
@@ -328,48 +427,13 @@ function Home() {
                                       >
                                         Delete
                                       </button>
-                                      <button value={d.id}>Update</button>
-                                    </div>
-                                    {/* <Modal
-                                      title="Chỉnh sửa thông tin"
-                                      visible={isModalVisible}
-                                      onOk={() => handleOkUpdate(d.name)}
-                                      onCancel={handleCancel}
-                                    >
-                                      <Form
-                                        onFinish={onFinish}
-                                        onFinishFailed={onFinishFailed}
-                                        layout="vertical"
-                                        className="row-col"
+                                      <button
+                                        value={d.permission}
+                                        onClick={showModalUpdate}
                                       >
-                                        <Form.Item
-                                          className="username"
-                                          label="Province Id"
-                                          name="Province Id"
-                                        >
-                                          <Input
-                                            // defaultValue={d.id}
-                                            onChange={handleChangeProvinceId}
-                                          />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                          className="username"
-                                          label="Province Name"
-                                          name="Province Name"
-                                        >
-                                          <Input
-                                            // defaultValue={d.name}
-                                            onChange={handleChangeProvinceName}
-                                          />
-                                        </Form.Item>
-                                        <Form.Item><Switch
-                                      checked={
-                                        d.is_active
-                                      } onChange={onChange}
-                                    /></Form.Item>
-                                      </Form>
-                                    </Modal> */}
+                                        Update
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               ))}
@@ -387,9 +451,7 @@ function Home() {
                       className="mb-24"
                     >
                       <div>
-                        <Title className="mb-15">
-                          Cấp tài khoản cho cán bộ A2
-                        </Title>
+                        <Title level={5}>Cấp tài khoản cho cán bộ A3</Title>
                         <Title className="font-regular text-muted" level={5}>
                           {/* Titlesub */}
                         </Title>
@@ -402,19 +464,19 @@ function Home() {
                           <Form.Item
                             className="username"
                             name="name"
-                            label="Province"
+                            label="District"
                             rules={[
                               {
                                 required: true,
-                                message: "Please select the province!",
+                                message: "Please select the District!",
                                 whitespace: true,
                               },
                             ]}
                           >
                             <Select
-                              onSelect={handleSelectProvince}
+                              onSelect={handleSelectDistrict}
                               showSearch
-                              placeholder="Select Province"
+                              placeholder="Select District"
                               optionFilterProp="children"
                               filterOption={(input: any, option: any) =>
                                 option.children
@@ -427,9 +489,11 @@ function Home() {
                                   .localeCompare(optionB.children.toLowerCase())
                               }
                             >
-                              {provinceList?.provinces?.map((item: any) => {
+                              {districtList?.districts?.map((item: any) => {
                                 return (
-                                  <Option value={item.id}>{item.name}</Option>
+                                  <Option key={item.id} value={item.id}>
+                                    {item.name}
+                                  </Option>
                                 );
                               })}
                             </Select>
@@ -491,17 +555,6 @@ function Home() {
                             <Input.Password placeholder="Enter your password confirmation" />
                           </Form.Item>
 
-                          {/* <Form.Item
-                            className="username"
-                            label="Date"
-                            name="Date"
-                        
-                          >
-                            <Space direction="vertical" >
-                              <RangePicker onChange={handleChangeDate} />
-                            </Space>
-                          </Form.Item> */}
-
                           <Form.Item>
                             <Button
                               type="primary"
@@ -516,6 +569,86 @@ function Home() {
                     </Col>
                   </Row>
                 </div>
+                <Modal
+                  title="Chỉnh sửa thông tin"
+                  visible={isModalVisible}
+                  onOk={handleOkUpdate}
+                  onCancel={handleCancel}
+                >
+                  <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    layout="vertical"
+                    className="row-col"
+                  >
+                    <Form.Item
+                      className="username"
+                      label="District"
+                      name="District"
+                      initialValue={initialModalUserArea}
+                    >
+                      <Select
+                        onSelect={handleSelectDistrict}
+                        showSearch
+                        placeholder="Select District"
+                        optionFilterProp="children"
+                        filterOption={(input: any, option: any) =>
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        filterSort={(optionA: any, optionB: any) =>
+                          optionA.children
+                            .toLowerCase()
+                            .localeCompare(optionB.children.toLowerCase())
+                        }
+                      >
+                        {districtList?.districts?.map((item: any) => {
+                          return (
+                            <Option key={item.id} value={item.id}>
+                              {item.name}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      className="username"
+                      name="username"
+                      label="Username"
+                    >
+                      <Input placeholder={initialModalUserName} disabled />
+                    </Form.Item>
+                    <Form.Item
+                      className="username"
+                      name="Status"
+                      label="Status"
+                      initialValue={initialModalUserStatus}
+                    >
+                      <Switch
+                        disabled={isActive === "0"}
+                        checked={status}
+                        onChange={handleChangeStatus}
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      className="username"
+                      label="Range Time"
+                      name="Range Time"
+                    >
+                      <RangePicker
+                        disabled={!status}
+                        disabledDate={disableDateRanges({
+                          endDate: new Date(endAt as any),
+                          startDate: new Date(startAt as any),
+                        })}
+                        onChange={handleChangeDate}
+                      />
+                    </Form.Item>
+                  </Form>
+                </Modal>
               </Content>
               <Footer />
             </Layout>
@@ -526,4 +659,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default A2AddUser;

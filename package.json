@@ -13,6 +13,7 @@
     "antd": "^4.17.3",
     "apexcharts": "^3.27.1",
     "axios": "^0.24.0",
+    "eslint": "^8.5.0",
     "install": "^0.13.0",
     "moment": "^2.29.1",
     "query-string": "^7.0.1",
