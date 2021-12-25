@@ -170,7 +170,7 @@ function Sidenav({/*  color */ }) {
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
-          <NavLink to="/">
+          <NavLink to="/add-admin">
             <span
               className="icon"
             // style={{
@@ -179,11 +179,14 @@ function Sidenav({/*  color */ }) {
             >
               {dashboard}
             </span>
-            <span className="label">Cấp tài khoản</span>
+            <span className="label">Cấp mã </span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
           <NavLink to="/citizen">
+            <span className="label">Citizen</span>
+          </NavLink>
+          <NavLink to="/add-user">
             <span
               className="icon"
             // style={{
@@ -192,8 +195,9 @@ function Sidenav({/*  color */ }) {
             >
               {tables}
             </span>
-            <span className="label">Citizen</span>
+
             <span className="label">Cấp mã</span>
+            <span className="label">Cấp tài khoản </span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
