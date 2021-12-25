@@ -193,6 +193,7 @@ function Sidenav({/*  color */ }) {
               {tables}
             </span>
             <span className="label">Citizen</span>
+            <span className="label">Cấp mã</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
