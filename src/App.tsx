@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import Home from "./views/Home";
-import Tables from "./views/Tables";
+import Citizen from "./views/Citizen/Citizen";
 import Billing from "./views/Billing";
 import Rtl from "./views/Rtl";
 import Profile from "./views/Profile";
@@ -20,7 +20,6 @@ import SignIn from "./views/SignIn";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Main from "components/layout/Main";
 
 function App() {
   return (
@@ -31,7 +30,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/" element={<Home />} />
-          <Route path="/tables" element={<Tables />} />
+          <Route path="/citizen" element={<Citizen />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/rtl" element={<Rtl />} />
           <Route path="/profile" element={<Profile />} />
