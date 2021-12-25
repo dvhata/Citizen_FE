@@ -9,11 +9,7 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import Home from "./views/Home";
 import Citizen from "./views/Citizen/Citizen";
-import Billing from "./views/Billing";
-import Rtl from "./views/Rtl";
-import Profile from "./views/Profile";
 import SignIn from "./views/SignIn";
 
 import "./assets/styles/main.css";
@@ -21,8 +17,6 @@ import "./assets/styles/responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SignIn from "views/SignIn";
 import A1AddAdmin from "views/A1/A1AddAdmin";
 import A1AddUser from "views/A1/A1AddUser";
 import A2AddAdmin from "views/A2/A2AddAdmin";
@@ -49,17 +43,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/" element={<Home />} />
           <Route path="/citizen" element={<Citizen />} />
-          <Route path="/billing" element={<Billing />} />
-          <Route path="/rtl" element={<Rtl />} />
-          <Route path="/profile" element={<Profile />} />
-          {role === 1 && (
-            <>
-              <Route path="/add-admin" element={<A1AddAdmin />} />
-              <Route path="/add-user" element={<A1AddUser />} />
-            </>
-          )}
+          <>
+            <Route path="/add-admin" element={<A1AddAdmin />} />
+            <Route path="/add-user" element={<A1AddUser />} />
+          </>
           {role === 2 && (
             <>
               <Route path="/add-admin" element={<A2AddAdmin />} />
