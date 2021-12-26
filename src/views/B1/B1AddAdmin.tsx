@@ -374,7 +374,7 @@ function B1AddAdmin() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        Xóa 
                                       </button>
 
                                       <button
@@ -382,7 +382,7 @@ function B1AddAdmin() {
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        Sửa
                                       </button>
                                     </div>
                                   </td>
@@ -418,13 +418,13 @@ function B1AddAdmin() {
                           >
                             <Form.Item
                               className="username"
-                              label="Hamlet Id"
-                              name="Hamlet Id"
+                              label="Mã Thôn/Tổ"
+                              name="Mã Thôn/Tổ"
                               rules={[
                                 {
                                   required: true,
                                   message:
-                                    "Please input your Hamlet Id! from 01-99",
+                                    "Nhập Mã Thôn/Tổ! from 01-99",
                                 },
                               ]}
                             >
@@ -432,25 +432,25 @@ function B1AddAdmin() {
                                 prefix={permission}
                                 suffix={suffix}
                                 onChange={handleChangeHamletId}
-                                placeholder="Enter your Hamlet Id"
+                                placeholder="Nhập Mã Thôn/Tổ"
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="Hamlet Name"
-                              name="Hamlet Name"
+                              label="Tên Thôn/Tổ"
+                              name="Tên Thôn/Tổ"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your Hamlet Name!",
+                                  message: "Nhập Tên Thôn/Tổ!",
                                 },
                               ]}
                             >
                               <Input
                                 allowClear
                                 onChange={handleChangeHamletName}
-                                placeholder="Enter your Hamlet Name"
+                                placeholder="Nhập Tên Thôn/Tổ"
                               />
                             </Form.Item>
 
@@ -483,8 +483,8 @@ function B1AddAdmin() {
                   >
                     <Form.Item
                       className="username"
-                      label="Hamlet Id"
-                      name="Hamlet Id"
+                      label="Mã Thôn/Tổ"
+                      name="Mã Thôn/Tổ"
                       initialValue={initialModalHamletId.slice(6)}
                     >
                       <Input
@@ -496,8 +496,8 @@ function B1AddAdmin() {
 
                     <Form.Item
                       className="username"
-                      label="Hamlet Name"
-                      name="Hamlet Name"
+                      label="Tên Thôn/Tổ"
+                      name="Tên Thôn/Tổ"
                       initialValue={initialModalHamletName}
                     >
                       <Input onChange={handleChangeHamletName} />

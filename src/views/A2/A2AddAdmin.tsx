@@ -360,7 +360,7 @@ function A2AddAdmin() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        Xóa 
                                       </button>
 
                                       <button
@@ -368,7 +368,7 @@ function A2AddAdmin() {
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        Sửa
                                       </button>
                                     </div>
                                   </td>
@@ -391,7 +391,7 @@ function A2AddAdmin() {
                         <div className="timeline-box">
                           <Title level={5}>
                             {" "}
-                            Khai báo và cấp mã cho quận/huyện
+                            Khai báo và cấp mã cho Quận/Huyện
                           </Title>
                           <Title className="font-regular text-muted" level={5}>
                             {/* Titlesub */}
@@ -404,13 +404,13 @@ function A2AddAdmin() {
                           >
                             <Form.Item
                               className="username"
-                              label="District Id"
-                              name="District Id"
+                              label="Mã Quận/Huyện"
+                              name="Mã Quận/Huyện"
                               rules={[
                                 {
                                   required: true,
                                   message:
-                                    "Please input your District Id! from 00-99",
+                                    "Nhập Mã Quận/Huyện! from 00-99",
                                 },
                               ]}
                             >
@@ -418,25 +418,25 @@ function A2AddAdmin() {
                                 prefix={permission}
                                 suffix={suffix}
                                 onChange={handleChangeDistrictId}
-                                placeholder="Enter your District Id"
+                                placeholder="Nhập Mã Quận/Huyện"
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="District Name"
-                              name="District Name"
+                              label="Tên Quận/Huyện"
+                              name="Tên Quận/Huyện"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your District Name!",
+                                  message: "Nhập Tên Quận/Huyện!",
                                 },
                               ]}
                             >
                               <Input
                                 allowClear
                                 onChange={handleChangeDistrictName}
-                                placeholder="Enter your District Name"
+                                placeholder="Nhập Tên Quận/Huyện"
                               />
                             </Form.Item>
 
@@ -469,8 +469,8 @@ function A2AddAdmin() {
                   >
                     <Form.Item
                       className="username"
-                      label="District Id"
-                      name="District Id"
+                      label="Mã Quận/Huyện"
+                      name="Mã Quận/Huyện"
                       initialValue={initialModalDistrictId.slice(2)}
                     >
                       <Input
@@ -482,8 +482,8 @@ function A2AddAdmin() {
 
                     <Form.Item
                       className="username"
-                      label="District Name"
-                      name="District Name"
+                      label="Tên Quận/Huyện"
+                      name="Tên Quận/Huyện"
                       initialValue={initialModalDistrictName}
                     >
                       <Input onChange={handleChangeDistrictName} />

@@ -357,14 +357,14 @@ function A1AddAdmin() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        delete
+                                        Xóa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
-                                        update
+                                        Sửa
                                       </button>
                                     </div>
                                   </td>
@@ -400,38 +400,38 @@ function A1AddAdmin() {
                           >
                             <Form.Item
                               className="username"
-                              label="Province Id"
-                              name="Province Id"
+                              label="Mã Tỉnh/Thành phố"
+                              name="Mã Tỉnh/Thành phố"
                               rules={[
                                 {
                                   required: true,
                                   message:
-                                    "Please input your Province Id! from 01-63",
+                                    "Nhập Mã Tỉnh/Thành phố!  01-63",
                                 },
                               ]}
                             >
                               <Input
                                 suffix={suffix}
                                 onChange={handleChangeProvinceId}
-                                placeholder="Enter your Province Id"
+                                placeholder="Nhập Mã Tỉnh/Thành phố"
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="Province Name"
-                              name="Province Name"
+                              label="Tên "
+                              name="Tên "
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your Province Name!",
+                                  message: "Nhập tên Tỉnh/Thành phố! !",
                                 },
                               ]}
                             >
                               <Input
                                 allowClear
                                 onChange={handleChangeProvinceName}
-                                placeholder="Enter your Province Name"
+                                placeholder="Nhập tên Tỉnh/Thành phố! "
                               />
                             </Form.Item>
 
@@ -464,8 +464,8 @@ function A1AddAdmin() {
                   >
                     <Form.Item
                       className="username"
-                      label="Province Id"
-                      name="Province Id"
+                      label="Mã Tỉnh/Thành phố"
+                      name="Mã Tỉnh/Thành phố"
                       initialValue={initialModalProvinceId}
                     >
                       <Input
@@ -476,8 +476,8 @@ function A1AddAdmin() {
 
                     <Form.Item
                       className="username"
-                      label="Province Name"
-                      name="Province Name"
+                      label="Tên Tỉnh/Thành phố! "
+                      name="Tên Tỉnh/Thành phố! "
                       initialValue={initialModalProvinceName}
                     >
                       <Input onChange={handleChangeProvinceName} />
