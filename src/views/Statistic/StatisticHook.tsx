@@ -158,6 +158,7 @@ export function useStatistic() {
             setDisableProvince(true);
             setSelectedProvince(originProvince);
             LoadListProvince(originProvince);
+            LoadListDistrict(originProvince);
             if (originDistrict?.length !== 4) {
                 LoadAgeStatistic(originProvince);
                 LoadAmountStatistic(originProvince);
@@ -168,6 +169,7 @@ export function useStatistic() {
             setDisableDistrict(true);
             setSelectedDistrict(originDistrict);
             LoadListDistrict(originDistrict);
+            LoadListWard(originDistrict);
             if (originWard?.length !== 6) {
                 LoadAgeStatistic(originDistrict);
                 LoadAmountStatistic(originDistrict);
@@ -179,6 +181,7 @@ export function useStatistic() {
             setDisableWard(true);
             setSelectedWard(originWard);
             LoadListWard(originWard);
+            LoadListHamlet(originWard);
             if (originHamlet?.length !== 8) {
                 LoadAgeStatistic(originDistrict);
                 LoadAmountStatistic(originDistrict);

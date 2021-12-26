@@ -130,17 +130,20 @@ export function useCitizen() {
             setDisableProvince(true);
             setSelectedProvince(originProvince);
             LoadListProvince(originProvince);
+            LoadListDistrict(originProvince);
         }
         if (originDistrict?.length === 4) {
             setDisableDistrict(true);
             setSelectedDistrict(originDistrict);
             LoadListDistrict(originDistrict);
+            LoadListWard(originDistrict);
         }
 
         if (originWard?.length === 6) {
             setDisableWard(true);
             setSelectedWard(originWard);
             LoadListWard(originWard);
+            LoadListHamlet(originWard);
         }
         if (originHamlet?.length === 8) {
             setDisableHamlet(true);
