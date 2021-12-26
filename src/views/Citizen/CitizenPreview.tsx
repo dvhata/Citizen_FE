@@ -24,7 +24,7 @@ function CitizenPreview(props: CitizenPreviewProps
             <Descriptions title={`Thông tin công dân ${model.name}`}>
                 <Descriptions.Item label="Họ và tên">{model.name}</Descriptions.Item>
                 <Descriptions.Item label="Căn cước/ cmtnd">{model.ID_number}</Descriptions.Item>
-                <Descriptions.Item label="Giới tính">{model.gender === 1 ? `nam` : `nữ`}</Descriptions.Item>
+                <Descriptions.Item label="Giới tính">{model.gender === 1 ? `Nam` : `Nữ`}</Descriptions.Item>
                 <Descriptions.Item label="Ngày sinh">{moment(model.date_of_birth).format('DD-MM-YYYY')}</Descriptions.Item>
                 <Descriptions.Item label="Quê quán">{model.hometown}</Descriptions.Item>
                 <Descriptions.Item label="Địa chỉ thường trú">{model.permanent_address}</Descriptions.Item>

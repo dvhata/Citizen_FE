@@ -120,7 +120,7 @@ function Citizen() {
       key: "gender",
       dataIndex: "gender",
       render: (gender: number) => {
-        return gender === 1 ? "nam" : "nữ";
+        return gender === 1 ? "Nam" : "Nữ";
       },
     },
 
