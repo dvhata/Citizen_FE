@@ -16,8 +16,8 @@ const { Option } = Select;
 function CitizenDetail(props: CitizenModalProps) {
     const { isOpenModel, handleCloseModal, model, setModel } = props;
     const gender = [
-        { id: 1, name: 'nam' },
-        { id: 2, name: 'nữ' }
+        { id: 1, name: 'Nam' },
+        { id: 2, name: 'Nữ' }
     ]
     const token = localStorage.getItem("token");
     const permission = localStorage.getItem("permission");
@@ -218,7 +218,7 @@ function CitizenDetail(props: CitizenModalProps) {
                     <Input
                         value={temporary_address}
                         onChange={(e) => setTemporary_address(e.target.value)}
-                        placeholder="Nhập thường công dân ..."
+                        placeholder="Nhập Thuờng trú công dân ..."
                     >
                     </Input>
                 </div>

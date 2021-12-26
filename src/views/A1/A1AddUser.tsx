@@ -150,7 +150,7 @@ function A1AddUser() {
       .delete(token as string, e.target.value as string)
       .then((response: User) => {
         setUserList(response);
-        window.location.reload();
+        // window.location.reload();
       });
   };
 
@@ -422,7 +422,7 @@ function A1AddUser() {
                                     <div className="percent-progress">
                                       <button
                                         className="button"
-                                        value={d.id}
+                                        value={d.permission}
                                         onClick={onDelete}
                                       >
                                         Xóa
@@ -519,52 +519,47 @@ function A1AddUser() {
                             </Form.Item>
 
                             <Form.Item
-                              className="username"
-                              label="Mật khẩu"
-                              name="Mật khẩu"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Nhập Mật khẩu!",
-                                },
-                              ]}
-                            >
-                              <Input.Password
-                                onChange={handleChangePassword}
-                                placeholder="Nhập password"
-                              />
-                            </Form.Item>
+                      className="username"
+                      label="Password"
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Nhập password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        onChange={handleChangePassword}
+                        placeholder="Nhập password"
+                      />
+                    </Form.Item>
 
-                            <Form.Item
-                              className="username"
-                              name="confirm"
-                              label="Xác nhận Mật khẩu"
-                              dependencies={["password"]}
-                              hasFeedback
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Xác nhận Mật khẩu!",
-                                },
-                                ({ getFieldValue }) => ({
-                                  validator(_, value) {
-                                    if (
-                                      !value ||
-                                      getFieldValue("password") === value
-                                    ) {
-                                      return Promise.resolve();
-                                    }
-                                    return Promise.reject(
-                                      new Error(
-                                        "Mật khẩu không khớp!"
-                                      )
-                                    );
-                                  },
-                                }),
-                              ]}
-                            >
-                              <Input.Password placeholder="Nhập password confirmation" />
-                            </Form.Item>
+                    <Form.Item
+                      className="username"
+                      name="confirm"
+                      label="Xác nhận password!"
+                      dependencies={["password"]}
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Xác nhận password!",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("Mật khẩu không khớp!")
+                            );
+                          },
+                        }),
+                      ]}
+                    >
+                      <Input.Password placeholder="Nhập password xác nhận" />
+                    </Form.Item>
 
                             <Form.Item>
                               <Button
@@ -648,8 +643,8 @@ function A1AddUser() {
                       <RangePicker
                         disabled={!status}
                         disabledDate={disableDateRanges({
-                          endDate: new Date(initialModalUserEndAt as any),
-                          startDate: new Date(initialModalUserStartAt as any),
+                          endDate: new Date(""),
+                          startDate: new Date(""),
                         })}
                         onChange={handleChangeDate}
                       />

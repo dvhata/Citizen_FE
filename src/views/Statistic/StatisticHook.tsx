@@ -1,5 +1,10 @@
 import statisticApi from "api/StatisticApi";
+import { Age } from "models/Age/Age";
+import { AgeData } from "models/Age/AgeData";
+import { Amount } from "models/Amount/Amount";
+import { AmountData } from "models/Amount/AmountData";
 import { DistrictData } from "models/District/DistrictData";
+import { GenderData } from "models/Gender/GenderData";
 import { HamletData } from "models/Hamlet/HamletData";
 import { ProvinceData } from "models/Province/ProvinceData";
 import { WardData } from "models/Ward/WardData";
@@ -8,9 +13,9 @@ import React from "react";
 export function useStatistic() {
     const token = localStorage.getItem("token");
     const [permission, setPermisstion] = React.useState(localStorage.getItem("permission"));
-    const [ageStatistic, setAgeStatistic] = React.useState<any>();
-    const [genderStatistic, setGenderStatistic] = React.useState<any>();
-    const [amountStatistic, setAmountStatistic] = React.useState([]);
+    const [ageStatistic, setAgeStatistic] = React.useState<AgeData>();
+    const [genderStatistic, setGenderStatistic] = React.useState<GenderData>();
+    const [amountStatistic, setAmountStatistic] = React.useState<Amount>();
     const originProvince = localStorage.getItem("permission")?.substring(0, 2);
     const originDistrict = localStorage.getItem("permission")?.substring(2, 4);
     const originWard = localStorage.getItem("permission")?.substring(4, 6);
@@ -102,7 +107,7 @@ export function useStatistic() {
         (permisstion) => {
             const fetchStatisticList = async () => {
                 try {
-                    const res = await statisticApi
+                    const res: Age = await statisticApi
                         .age(
                             permisstion,
                             token,

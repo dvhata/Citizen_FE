@@ -382,9 +382,7 @@ function B1AddUser() {
                       >
                         <div className="project-ant">
                           <div>
-                            <Title level={5}>
-                              Tài khoản đã cấp (Thôn/Tổ)
-                            </Title>
+                            <Title level={5}>Tài khoản đã cấp (Thôn/Tổ)</Title>
                             <Paragraph className="lastweek">
                               Tổng số:
                               <span className="blue">
@@ -406,7 +404,7 @@ function B1AddUser() {
                           <table className="width-100">
                             <thead>
                               <tr>
-                              <th>TÊN TÀI KHOẢN</th>
+                                <th>TÊN TÀI KHOẢN</th>
                                 <th>THÔN/TỔ</th>
                                 <th>THỜI GIAN KHAI BÁO</th>
                                 <th>QUYỀN KHAI BÁO</th>
@@ -536,8 +534,8 @@ function B1AddUser() {
 
                           <Form.Item
                             className="username"
-                            label="Mật khẩu"
-                            name="Mật khẩu"
+                            label="Password"
+                            name="password"
                             rules={[
                               {
                                 required: true,
@@ -554,13 +552,13 @@ function B1AddUser() {
                           <Form.Item
                             className="username"
                             name="confirm"
-                            label="Xác nhận Mật khẩu"
+                            label="Xác nhận password!"
                             dependencies={["password"]}
                             hasFeedback
                             rules={[
                               {
                                 required: true,
-                                message: "Xác nhận Mật khẩu!",
+                                message: "Xác nhận password!",
                               },
                               ({ getFieldValue }) => ({
                                 validator(_, value) {
@@ -577,7 +575,7 @@ function B1AddUser() {
                               }),
                             ]}
                           >
-                            <Input.Password placeholder="Nhập password confirmation" />
+                            <Input.Password placeholder="Nhập password xác nhận" />
                           </Form.Item>
 
                           <Form.Item>

@@ -54,7 +54,6 @@ function App() {
             <>
               <Route path="/add-admin" element={<A1AddAdmin />} />
               <Route path="/add-user" element={<A1AddUser />} />
-              <Route path="/statistic" element={<A1Statistic />} />
             </>
           )}
 
@@ -62,21 +61,21 @@ function App() {
             <>
               <Route path="/add-admin" element={<A2AddAdmin />} />
               <Route path="/add-user" element={<A2AddUser />} />
-              <Route path="/statistic" element={<A2Statistic />} />
+  
             </>
           )}
           {role === 3 && (
             <>
               <Route path="/add-admin" element={<A3AddAdmin />} />
               <Route path="/add-user" element={<A3AddUser />} />
-              <Route path="/statistic" element={<A3Statistic />} />
+   
             </>
           )}
           {role === 4 && (
             <>
               <Route path="/add-admin" element={<B1AddAdmin />} />
               <Route path="/add-user" element={<B1AddUser />} />
-              <Route path="/statistic" element={<B1Statistic />} />
+   
             </>
           )}
 

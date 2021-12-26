@@ -33,8 +33,8 @@ import { useCitizen } from "./CitizenHook";
 import { CitizenData } from "models/Citizen/CitizenData";
 import CitizenDetail from "./CitizenDetail";
 import CitizenPreview from "./CitizenPreview";
-import "./Citizen.css"
-import "./CitizenDetail.css"
+import "./Citizen.css";
+import "./CitizenDetail.css";
 
 let token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
@@ -134,14 +134,25 @@ function Citizen() {
       render: (model: CitizenData) => {
         return (
           <>
-            <button className="button" onClick={() => handleGoPreview(model)}>xem</button>
-            {role && (role === '4' || (role === '5'))
-              && (<button className="button" onClick={() => handleGoToCreate(model)}>sửa</button>)
-            }
-            {role && (role === '4' || (role === '5'))
-              && (<button className="button" onClick={() => deleteCitizen(model.id)}>xóa</button>)
-            }
-
+            <button className="button" onClick={() => handleGoPreview(model)}>
+              xem
+            </button>
+            {role && (role === "4" || role === "5") && (
+              <button
+                className="button"
+                onClick={() => handleGoToCreate(model)}
+              >
+                sửa
+              </button>
+            )}
+            {role && (role === "4" || role === "5") && (
+              <button
+                className="button"
+                onClick={() => deleteCitizen(model.id)}
+              >
+                xóa
+              </button>
+            )}
           </>
         );
       },
@@ -196,8 +207,9 @@ function Citizen() {
         <>
           {" "}
           <Layout
-            className={`layout-dashboard ${pathname === "profile" ? "layout-profile" : ""
-              } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
+            className={`layout-dashboard ${
+              pathname === "profile" ? "layout-profile" : ""
+            } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
           >
             <Drawer
               title={false}
@@ -207,19 +219,22 @@ function Citizen() {
               visible={visible}
               key={placement === "right" ? "left" : "right"}
               width={250}
-              className={`drawer-sidebar ${pathname === "rtl" ? "drawer-sidebar-rtl" : ""
-                } `}
+              className={`drawer-sidebar ${
+                pathname === "rtl" ? "drawer-sidebar-rtl" : ""
+              } `}
             >
               <Layout
-                className={`layout-dashboard ${pathname === "rtl" ? "layout-dashboard-rtl" : ""
-                  }`}
+                className={`layout-dashboard ${
+                  pathname === "rtl" ? "layout-dashboard-rtl" : ""
+                }`}
               >
                 <Sider
                   trigger={null}
                   width={250}
                   theme="light"
-                  className={`sider-primary ant-layout-sider-primary ${sidenavType === "#fff" ? "active-route" : ""
-                    }`}
+                  className={`sider-primary ant-layout-sider-primary ${
+                    sidenavType === "#fff" ? "active-route" : ""
+                  }`}
                   style={{ background: sidenavType }}
                 >
                   <Sidenav /* color={sidenavColor} */ />
@@ -235,8 +250,9 @@ function Citizen() {
               trigger={null}
               width={250}
               theme="light"
-              className={`sider-primary ant-layout-sider-primary ${sidenavType === "#fff" ? "active-route" : ""
-                }`}
+              className={`sider-primary ant-layout-sider-primary ${
+                sidenavType === "#fff" ? "active-route" : ""
+              }`}
               style={{ background: sidenavType }}
             >
               <Sidenav /* color={sidenavColor} */ />
@@ -312,9 +328,7 @@ function Citizen() {
                     <Row justify="space-around" className="search__componet">
                       <Col lg={5}>
                         <div className="input__component">
-                          <span className="input__label">
-                            Tỉnh/thành phố
-                          </span>
+                          <span className="input__label">Tỉnh/thành phố</span>
                           <Select
                             onChange={(value) => handleChangeProvince(value)}
                             placeholder="Chọn tỉnh/ thành phố"
@@ -330,25 +344,22 @@ function Citizen() {
                             filterSort={(optionA: any, optionB: any) =>
                               optionA.children
                                 .toLowerCase()
-                                .localeCompare(
-                                  optionB.children.toLowerCase()
-                                )
+                                .localeCompare(optionB.children.toLowerCase())
                             }
                           >
-                            {
-                              provinceList.map((item, index) => {
-                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
-                              })
-                            }
-
+                            {provinceList.map((item, index) => {
+                              return (
+                                <Option value={item?.id ? item?.id : index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                         </div>
                       </Col>
                       <Col lg={5}>
                         <div className="input__component">
-                          <span className="input__label">
-                            Quận/ huyện
-                          </span>
+                          <span className="input__label">Quận/ huyện</span>
                           <Select
                             onChange={(value) => handleChangeDistrict(value)}
                             placeholder="Chọn quận/ huyện"
@@ -363,25 +374,22 @@ function Citizen() {
                             filterSort={(optionA: any, optionB: any) =>
                               optionA.children
                                 .toLowerCase()
-                                .localeCompare(
-                                  optionB.children.toLowerCase()
-                                )
+                                .localeCompare(optionB.children.toLowerCase())
                             }
                           >
-                            {
-                              districtList.map((item, index) => {
-                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
-                              })
-                            }
-
+                            {districtList.map((item, index) => {
+                              return (
+                                <Option value={item?.id ? item?.id : index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                         </div>
                       </Col>
                       <Col lg={5}>
                         <div className="input__component">
-                          <span className="input__label">
-                            Xã/phường
-                          </span>
+                          <span className="input__label">Xã/phường</span>
                           <Select
                             placeholder="Chọn xã/phường"
                             onChange={(value) => handleChangeWard(value)}
@@ -395,25 +403,22 @@ function Citizen() {
                             filterSort={(optionA: any, optionB: any) =>
                               optionA.children
                                 .toLowerCase()
-                                .localeCompare(
-                                  optionB.children.toLowerCase()
-                                )
+                                .localeCompare(optionB.children.toLowerCase())
                             }
                           >
-                            {
-                              wardList.map((item, index) => {
-                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
-                              })
-                            }
-
+                            {wardList.map((item, index) => {
+                              return (
+                                <Option value={item?.id ? item?.id : index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                         </div>
                       </Col>
                       <Col lg={5}>
                         <div className="input__component">
-                          <span className="input__label">
-                            Thôn xóm
-                          </span>
+                          <span className="input__label">Thôn xóm</span>
                           <Select
                             placeholder="Chọn thôn/xóm"
                             onChange={(value) => handleChangeHamlet(value)}
@@ -427,41 +432,40 @@ function Citizen() {
                             filterSort={(optionA: any, optionB: any) =>
                               optionA.children
                                 .toLowerCase()
-                                .localeCompare(
-                                  optionB.children.toLowerCase()
-                                )
+                                .localeCompare(optionB.children.toLowerCase())
                             }
                           >
-                            {
-                              hamletList.map((item, index) => {
-                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
-                              })
-                            }
-
+                            {hamletList.map((item, index) => {
+                              return (
+                                <Option value={item?.id ? item?.id : index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                         </div>
                       </Col>
                     </Row>
                     <Row className="button__component">
-
-                      {role && (role === '4' || (role === '5')) &&
-                        (<a href="https://hoatieu.vn/mau-phieu-thu-thap-thong-tin-dan-cu-136594"
-                          target="_blank">
-                          <Button>
-                            Template
-                          </Button>
+                      {role && (role === "4" || role === "5") && (
+                        <a
+                          href="https://docs.google.com/document/d/1zErHk65ypbgEy34JXMo4FLi_uhOaBxRh/edit?usp=sharing&ouid=113695712961778007834&rtpof=true&sd=true"
+                          target="_blank"
+                        >
+                          <Button style={{marginLeft:"20px"}} className="button">Mẫu nhập</Button>
                         </a>
-                        )}
+                      )}
 
-                      {role && (role === '4' || (role === '5')) && (<Button
-                        onClick={() => handleGoToCreate(selectedModel)}
-                        className="button__create button"
-                      >
-                        Tạo mới
-                      </Button>)}
+                      {role && (role === "4" || role === "5") && (
+                        <Button
+                          onClick={() => handleGoToCreate(selectedModel)}
+                          className="button__create button"
+                        >
+                          Tạo mới
+                        </Button>
+                      )}
 
                       <Button
-                      
                         onClick={handleResetFilter}
                         className="button__resetFilter button"
                       >
@@ -493,8 +497,7 @@ function Citizen() {
             </Layout>
           </Layout>
         </>
-      )
-      }
+      )}
     </>
   );
 }

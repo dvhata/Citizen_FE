@@ -531,50 +531,47 @@ function A2AddUser() {
                             </Form.Item>
 
                             <Form.Item
-                              className="username"
-                              label="Mật khẩu"
-                              name="Mật khẩu"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Nhập Mật khẩu!",
-                                },
-                              ]}
-                            >
-                              <Input.Password
-                                onChange={handleChangePassword}
-                                placeholder="Nhập password"
-                              />
-                            </Form.Item>
+                      className="username"
+                      label="Password"
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Nhập password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        onChange={handleChangePassword}
+                        placeholder="Nhập password"
+                      />
+                    </Form.Item>
 
-                            <Form.Item
-                              className="username"
-                              name="confirm"
-                              label="Xác nhận Mật khẩu"
-                              dependencies={["password"]}
-                              hasFeedback
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Xác nhận Mật khẩu!",
-                                },
-                                ({ getFieldValue }) => ({
-                                  validator(_, value) {
-                                    if (
-                                      !value ||
-                                      getFieldValue("password") === value
-                                    ) {
-                                      return Promise.resolve();
-                                    }
-                                    return Promise.reject(
-                                      new Error("Mật khẩu không khớp!")
-                                    );
-                                  },
-                                }),
-                              ]}
-                            >
-                              <Input.Password placeholder="Nhập password confirmation" />
-                            </Form.Item>
+                    <Form.Item
+                      className="username"
+                      name="confirm"
+                      label="Xác nhận password!"
+                      dependencies={["password"]}
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Xác nhận password!",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("Mật khẩu không khớp!")
+                            );
+                          },
+                        }),
+                      ]}
+                    >
+                      <Input.Password placeholder="Nhập password xác nhận" />
+                    </Form.Item>
 
                             <Form.Item>
                               <Button
