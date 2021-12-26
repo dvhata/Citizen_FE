@@ -433,7 +433,7 @@ function Citizen() {
                             }
                           >
                             {
-                              wardList.map((item, index) => {
+                              hamletList.map((item, index) => {
                                 return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
                               })
                             }
