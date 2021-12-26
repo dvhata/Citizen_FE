@@ -1,5 +1,6 @@
 export interface ProvinceData {
   id?: string;
   name?: string;
-  id_done?: number;
+  is_done?: number;
+  num_of_done?: number;
 }

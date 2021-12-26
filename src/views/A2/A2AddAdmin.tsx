@@ -21,7 +21,6 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import Sidenav from "components/layout/Sidenav";
 import { User } from "models/User/User";
@@ -30,11 +29,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon, {
   CheckCircleOutlined,
+  ClockCircleOutlined,
   CloseCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { District } from "models/District/District";
 import districtApi from "api/DistrictApi";
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -102,18 +104,11 @@ function A2AddAdmin() {
   }
 
   const handleChangeDistrictId = React.useCallback((e) => {
-    // const temp = parseInt(e.target.value);
-    // temp >= parseInt("01") && temp <= parseInt("63")
-    //   ? setId(e.target.value)
-    //   : setId("");
     if (e.target.value.length > 2) {
       setId("");
     } else {
       setId(e.target.value);
     }
-    // for (let i = 1; i <= 9; i++) {
-    //   if (e.target.value === i.toString) setId("");
-    // }
   }, []);
   const suffix = id !== "" ? <CheckCircleOutlined /> : <CloseCircleOutlined />;
 
@@ -190,7 +185,7 @@ function A2AddAdmin() {
         console.log(e.target.value, district);
         setInitialModalDistrictId(district.id as string);
         setInitialModalDistrictName(district.name as string);
-        setId(district.id as string);
+        setId(district.id  as string);
         setName(district.name as string);
       }
     });
@@ -203,12 +198,14 @@ function A2AddAdmin() {
       .districtUpdate(
         token as string,
         permissionModal as string,
+        permission as string,
         name as string,
         id as string
       )
       .then((response: District) => {
         if (response.success === true) {
           setDistrictList(response);
+          alert("Successfully")
           window.location.reload();
         } else {
           window.location.reload();
@@ -222,6 +219,8 @@ function A2AddAdmin() {
     setIsModalVisible(false);
     window.location.reload();
   };
+
+  console.log(districtList)
 
   return (
     <>
@@ -294,16 +293,7 @@ function A2AddAdmin() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -366,18 +356,35 @@ function A2AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    <div className="ant-progress-project">
-                                      <Progress percent={d.id_done} />
-                                    </div>
+                                    {d.is_done === "1" && (
+                                      <Tag
+                                        icon={<CheckCircleOutlined />}
+                                        color="success"
+                                      >
+                                        Hoàn thành
+                                      </Tag>
+                                    )}
+                                    {d.is_done === "0" && (
+                                      <Tag
+                                        icon={<ClockCircleOutlined />}
+                                        color="default"
+                                      >
+                                        Chưa hoàn thành
+                                      </Tag>
+                                    )}
                                   </td>
                                   <td>
                                     <div className="percent-progress">
-                                      <button className="button" value={d.id} onClick={onDelete}>
+                                      <button
+                                        className="button"
+                                        value={d.id}
+                                        onClick={onDelete}
+                                      >
                                         Delete
                                       </button>
 
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
@@ -484,7 +491,7 @@ function A2AddAdmin() {
                       className="username"
                       label="District Id"
                       name="District Id"
-                      initialValue={initialModalDistrictId}
+                      initialValue={initialModalDistrictId.slice(2)}
                     >
                       <Input
                         prefix={permission}
