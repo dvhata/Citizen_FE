@@ -443,6 +443,16 @@ function Citizen() {
                       </Col>
                     </Row>
                     <Row className="button__component">
+
+                      {role && (role === '4' || (role === '5')) &&
+                        (<a href="https://hoatieu.vn/mau-phieu-thu-thap-thong-tin-dan-cu-136594"
+                          target="_blank">
+                          <Button>
+                            Template
+                          </Button>
+                        </a>
+                        )}
+
                       {role && (role === '4' || (role === '5')) && (<Button
                         onClick={() => handleGoToCreate(selectedModel)}
                         className="button__create button"
