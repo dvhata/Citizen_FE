@@ -3048,9 +3048,11 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 .button {
-  background-color: white;
+  background-color: rgb(27, 150, 250);
+  color: white;
   border: none;
   width: 35;
+  margin-right: 5px;
 }
 
 .button:hover {

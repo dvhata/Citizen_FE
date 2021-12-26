@@ -123,6 +123,7 @@ function A2AddAdmin() {
         permission as string,
         name as string,
         id as string
+        
       )
       .then((response) => {
         if (response.success === true) {
@@ -137,12 +138,6 @@ function A2AddAdmin() {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
-  // log out
-  const handleLogOut = React.useCallback((e) => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }, []);
 
   //search
   const onSearch = async (value: string) => {
@@ -356,22 +351,7 @@ function A2AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    {d.is_done === "1" && (
-                                      <Tag
-                                        icon={<CheckCircleOutlined />}
-                                        color="success"
-                                      >
-                                        Hoàn thành
-                                      </Tag>
-                                    )}
-                                    {d.is_done === "0" && (
-                                      <Tag
-                                        icon={<ClockCircleOutlined />}
-                                        color="default"
-                                      >
-                                        Chưa hoàn thành
-                                      </Tag>
-                                    )}
+                                  <Progress percent={d.is_done} />
                                   </td>
                                   <td>
                                     <div className="percent-progress">
@@ -430,7 +410,7 @@ function A2AddAdmin() {
                                 {
                                   required: true,
                                   message:
-                                    "Please input your District Id! from 01-99",
+                                    "Please input your District Id! from 00-99",
                                 },
                               ]}
                             >

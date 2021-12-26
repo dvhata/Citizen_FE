@@ -657,6 +657,7 @@ function A1AddUser() {
                   </Form>
                 </Modal>
                 <Modal
+                  title="Change Password"
                   visible={isModalVisibleModalPassword}
                   onOk={handleOkChangePassword}
                   onCancel={handleCancel}

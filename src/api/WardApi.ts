@@ -45,15 +45,17 @@ class WardApi {
 
   wardUpdate = (
     token?: string,
+    permissionModal?: any,
     permission?: any,
     name?: string,
     id?: string
   ) => {
-    const url = "/ward/" + permission;
+    const url = "/ward/" + permissionModal;
     return axiosClient
       .put(
         url,
         {
+          permission,
           name,
           id,
         },

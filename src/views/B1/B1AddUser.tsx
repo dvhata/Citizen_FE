@@ -16,7 +16,6 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import userApi from "api/UserApi";
 import Sidenav from "components/layout/Sidenav";
@@ -27,7 +26,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Hamlet } from "models/Hamlet/Hamlet";
 import hamletApi from "api/HamletApi";
-
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -210,6 +210,7 @@ function B1AddUser() {
         setStartAt(startAt as any);
         setEndAt(endAt as any);
         setStatus(user.is_active as boolean);
+        setName(user.permission as string);
       }
     });
     setIsModalVisible(true);
@@ -265,12 +266,37 @@ function B1AddUser() {
     setStatus(checked);
   }
 
+  //modal change password
+  const [isModalVisibleModalPassword, setModalVisibleModalPassword] =
+    useState(false);
+  const showModalChangePassword = async (e: any) => {
+    setPermissionModal(e.target.value);
+    setModalVisibleModalPassword(true);
+  };
+
+  const handleOkChangePassword = async () => {
+    userApi
+      .changePassword(token as string, permissionModal as string, password)
+      .then((response: User) => {
+        if (response.success === true) {
+          setUserList(response);
+          alert("Successfully");
+          window.location.reload();
+        } else {
+          window.location.reload();
+          alert(response.message);
+        }
+      });
+    setModalVisibleModalPassword(false);
+  };
+
   return (
     <>
       {!token && (
         <Result
-          status="warning"
+          status="403"
           title="Bạn chưa đăng nhập"
+          subTitle="Sorry, you are not authorized to access this page."
           extra={
             <Button type="primary" key="console">
               <Link to={"/sign-in"}>đăng nhập </Link>
@@ -335,16 +361,7 @@ function B1AddUser() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -366,12 +383,13 @@ function B1AddUser() {
                         <div className="project-ant">
                           <div>
                             <Title level={5}>
-                              Tài khoản đã cấp (Quận/huyện)
+                              Tài khoản đã cấp (Thôn/Tổ)
                             </Title>
                             <Paragraph className="lastweek">
                               Tổng số:
                               <span className="blue">
-                                {userList?.users?.length} / {hamletList?.hamlets?.length}
+                                {userList?.users?.length} /{" "}
+                                {hamletList?.hamlets?.length}
                               </span>
                             </Paragraph>
                           </div>
@@ -422,18 +440,25 @@ function B1AddUser() {
                                   <td>
                                     <div className="percent-progress">
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.permission}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        delete
                                       </button>
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        update
+                                      </button>
+                                      <button
+                                        className="button"
+                                        value={d.permission}
+                                        onClick={showModalChangePassword}
+                                      >
+                                        change pass
                                       </button>
                                     </div>
                                   </td>
@@ -648,6 +673,64 @@ function B1AddUser() {
                         })}
                         onChange={handleChangeDate}
                       />
+                    </Form.Item>
+                  </Form>
+                </Modal>
+                <Modal
+                  title="Change Password"
+                  visible={isModalVisibleModalPassword}
+                  onOk={handleOkChangePassword}
+                  onCancel={handleCancel}
+                >
+                  <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    layout="vertical"
+                    className="row-col"
+                  >
+                    <Form.Item
+                      className="username"
+                      label="Password"
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        onChange={handleChangePassword}
+                        placeholder="Enter your password"
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      className="username"
+                      name="confirm"
+                      label="Confirm Password"
+                      dependencies={["password"]}
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please confirm your password!",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error(
+                                "The two passwords that you entered do not match!"
+                              )
+                            );
+                          },
+                        }),
+                      ]}
+                    >
+                      <Input.Password placeholder="Enter your password confirmation" />
                     </Form.Item>
                   </Form>
                 </Modal>

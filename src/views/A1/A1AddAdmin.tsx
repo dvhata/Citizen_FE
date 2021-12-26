@@ -348,22 +348,7 @@ function A1AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    {d.is_done === 1 && (
-                                      <Tag
-                                        icon={<CheckCircleOutlined />}
-                                        color="success"
-                                      >
-                                        Hoàn thành
-                                      </Tag>
-                                    )}
-                                    {d.is_done === 0 && (
-                                      <Tag
-                                        icon={<ClockCircleOutlined />}
-                                        color="default"
-                                      >
-                                        Chưa hoàn thành
-                                      </Tag>
-                                    )}
+                                  <Progress percent={d.is_done} />
                                   </td>
                                   <td>
                                     <div className="percent-progress">
