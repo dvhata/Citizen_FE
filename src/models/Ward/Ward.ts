@@ -5,4 +5,5 @@ export interface Ward {
   message?: boolean;
   wards?: WardData[];
   ward?: WardData;
+  num_of_done?: number;
 }

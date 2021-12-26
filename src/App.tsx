@@ -27,6 +27,11 @@ import B1AddAdmin from "views/B1/B1AddAdmin";
 import B1AddUser from "views/B1/B1AddUser";
 import B2AddAdmin from "views/B2/B2AddAdmin";
 import B2AddUser from "views/B2/B2AddUser";
+import A1Statistic from "views/A1/A1Statistic";
+import B2Statistic from "views/B2/B2Statistic";
+import B1Statistic from "views/B1/B1Statistic";
+import A3Statistic from "views/A3/A3Statistic";
+import A2Statistic from "views/A2/A2Statistic";
 
 let role_temp = localStorage.getItem("role");
 let role: number;
@@ -44,26 +49,33 @@ function App() {
         <Routes>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/citizen" element={<Citizen />} />
-          <>
-            <Route path="/add-admin" element={<A1AddAdmin />} />
-            <Route path="/add-user" element={<A1AddUser />} />
-          </>
+          {role === 1 && (
+            <>
+              <Route path="/add-admin" element={<A1AddAdmin />} />
+              <Route path="/add-user" element={<A1AddUser />} />
+              <Route path="/statistic" element={<A1Statistic />} />
+            </>
+          )}
+
           {role === 2 && (
             <>
               <Route path="/add-admin" element={<A2AddAdmin />} />
               <Route path="/add-user" element={<A2AddUser />} />
+              <Route path="/statistic" element={<A2Statistic />} />
             </>
           )}
           {role === 3 && (
             <>
               <Route path="/add-admin" element={<A3AddAdmin />} />
               <Route path="/add-user" element={<A3AddUser />} />
+              <Route path="/statistic" element={<A3Statistic />} />
             </>
           )}
           {role === 4 && (
             <>
               <Route path="/add-admin" element={<B1AddAdmin />} />
               <Route path="/add-user" element={<B1AddUser />} />
+              <Route path="/statistic" element={<B1Statistic />} />
             </>
           )}
 
@@ -71,11 +83,9 @@ function App() {
             <>
               <Route path="/add-admin" element={<B2AddAdmin />} />
               <Route path="/add-user" element={<B2AddUser />} />
+              <Route path="/statistic" element={<B2Statistic />} />
             </>
           )}
-
-          {/* <Route path="/statistic" element={<Statistic />} />
-          <Route path="/citizen-info" element={<CitizenInfo />} /> */}
         </Routes>
       </Router>
     </div>

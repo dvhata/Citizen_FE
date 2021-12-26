@@ -45,15 +45,17 @@ class DistrictApi {
 
   districtUpdate = (
     token?: string,
+    permissionModal?: any,
     permission?: any,
     name?: string,
     id?: string
   ) => {
-    const url = "/district/" + permission;
+    const url = "/district/" + permissionModal;
     return axiosClient
       .put(
         url,
         {
+          permission,
           name,
           id,
         },

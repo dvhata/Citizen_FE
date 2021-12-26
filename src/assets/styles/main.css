@@ -57,7 +57,9 @@ body {
 }
 .layout-dashboard .ant-layout-sider.sider-primary .brand span {
   vertical-align: middle;
-  margin-left: 3px;
+  margin-right: 20px;
+  font-weight: bold;
+  font-size:25px;
 }
 
 .layout-dashboard .ant-layout-sider.sider-primary .ant-layout-sider-children {
@@ -1495,7 +1497,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav li:active {
   height: 30px;
 }
 .aside-footer {
-  padding-top: 100px;
+  margin-top: 200px;
 }
 .ant-card-body {
   padding: 16px;
@@ -3047,15 +3049,13 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 
 .button {
   background-color: white;
-  border-radius: 5px;
-  background-color: #fff;
-  border-color: rgba(98, 169, 226, 0.966);
-  width: 40%;
-  margin-right: 5%;
+  border: none;
+  width: 35;
 }
 
 .button:hover {
-  background-color: rgba(100, 182, 250, 0.966);
+  background-color: rgb(100, 182, 250);
   color: white;
   border-color: rgba(0, 0, 0, 0.37);
 }
+

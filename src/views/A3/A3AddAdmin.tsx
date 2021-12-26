@@ -360,7 +360,7 @@ function A3AddAdmin() {
                                   </td>
                                   <td>
                                     <div className="ant-progress-project">
-                                      <Progress percent={d.id_done} />
+                                      <Progress percent={d.is_done} />
                                     </div>
                                   </td>
                                   <td>

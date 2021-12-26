@@ -16,7 +16,6 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import provinceApi from "api/ProvinceApi";
 import userApi from "api/UserApi";
@@ -28,6 +27,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { District } from "models/District/District";
 import districtApi from "api/DistrictApi";
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -149,12 +150,6 @@ function A2AddUser() {
       });
   };
 
-  // log out
-  const handleLogOut = React.useCallback((e) => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }, []);
-
   // delete
   const onDelete = async (e: any) => {
     alert("Are you sure you want to delete this");
@@ -197,7 +192,6 @@ function A2AddUser() {
 
   const showModalUpdate = async (e: any) => {
     setPermissionModal(e.target.value);
-    console.log(e.target.value);
     userList?.users?.map((user) => {
       if (e.target.value === user.permission) {
         console.log(user);
@@ -265,12 +259,37 @@ function A2AddUser() {
     setStatus(checked);
   }
 
+  //modal change password
+  const [isModalVisibleModalPassword, setModalVisibleModalPassword] =
+    useState(false);
+  const showModalChangePassword = async (e: any) => {
+    setPermissionModal(e.target.value);
+    setModalVisibleModalPassword(true);
+  };
+
+  const handleOkChangePassword = async () => {
+    userApi
+      .changePassword(token as string, permissionModal as string, password)
+      .then((response: User) => {
+        if (response.success === true) {
+          setUserList(response);
+          alert("Successfully");
+          window.location.reload();
+        } else {
+          window.location.reload();
+          alert(response.message);
+        }
+      });
+    setModalVisibleModalPassword(false);
+  };
+
   return (
     <>
       {!token && (
         <Result
-          status="warning"
+          status="403"
           title="Bạn chưa đăng nhập"
+          subTitle="Sorry, you are not authorized to access this page."
           extra={
             <Button type="primary" key="console">
               <Link to={"/sign-in"}>đăng nhập </Link>
@@ -335,16 +354,7 @@ function A2AddUser() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -371,7 +381,8 @@ function A2AddUser() {
                             <Paragraph className="lastweek">
                               Tổng số:
                               <span className="blue">
-                                {userList?.users?.length} / {districtList?.districts?.length}
+                                {userList?.users?.length} /{" "}
+                                {districtList?.districts?.length}
                               </span>
                             </Paragraph>
                           </div>
@@ -422,18 +433,25 @@ function A2AddUser() {
                                   <td>
                                     <div className="percent-progress">
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.permission}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        delete
                                       </button>
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        update
+                                      </button>
+                                      <button
+                                        className="button"
+                                        value={d.permission}
+                                        onClick={showModalChangePassword}
+                                      >
+                                        change pass
                                       </button>
                                     </div>
                                   </td>
@@ -452,122 +470,126 @@ function A2AddUser() {
                       xl={8}
                       className="mb-24"
                     >
-                      <div>
-                        <Title level={5}>Cấp tài khoản cho cán bộ A3</Title>
-                        <Title className="font-regular text-muted" level={5}>
-                          {/* Titlesub */}
-                        </Title>
-                        <Form
-                          onFinish={onFinish}
-                          onFinishFailed={onFinishFailed}
-                          layout="vertical"
-                          className="row-col"
-                        >
-                          <Form.Item
-                            className="username"
-                            name="name"
-                            label="District"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please select the District!",
-                                whitespace: true,
-                              },
-                            ]}
+                      <Card bordered={false} className="criclebox h-full">
+                        <div className="timeline-box">
+                          <Title level={5}>Cấp tài khoản cho cán bộ A3</Title>
+                          <Title className="font-regular text-muted" level={5}>
+                            {/* Titlesub */}
+                          </Title>
+                          <Form
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            layout="vertical"
+                            className="row-col"
                           >
-                            <Select
-                              onSelect={handleSelectDistrict}
-                              showSearch
-                              placeholder="Select District"
-                              optionFilterProp="children"
-                              filterOption={(input: any, option: any) =>
-                                option.children
-                                  .toLowerCase()
-                                  .indexOf(input.toLowerCase()) >= 0
-                              }
-                              filterSort={(optionA: any, optionB: any) =>
-                                optionA.children
-                                  .toLowerCase()
-                                  .localeCompare(optionB.children.toLowerCase())
-                              }
-                            >
-                              {districtList?.districts?.map((item: any) => {
-                                return (
-                                  <Option key={item.id} value={item.id}>
-                                    {item.name}
-                                  </Option>
-                                );
-                              })}
-                            </Select>
-                          </Form.Item>
-
-                          <Form.Item
-                            className="username"
-                            name="username"
-                            label="Username"
-                          >
-                            <Input placeholder={name} disabled />
-                          </Form.Item>
-
-                          <Form.Item
-                            className="username"
-                            label="Password"
-                            name="password"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please input your password!",
-                              },
-                            ]}
-                          >
-                            <Input.Password
-                              onChange={handleChangePassword}
-                              placeholder="Enter your password"
-                            />
-                          </Form.Item>
-
-                          <Form.Item
-                            className="username"
-                            name="confirm"
-                            label="Confirm Password"
-                            dependencies={["password"]}
-                            hasFeedback
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please confirm your password!",
-                              },
-                              ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                  if (
-                                    !value ||
-                                    getFieldValue("password") === value
-                                  ) {
-                                    return Promise.resolve();
-                                  }
-                                  return Promise.reject(
-                                    new Error(
-                                      "The two passwords that you entered do not match!"
-                                    )
-                                  );
+                            <Form.Item
+                              className="username"
+                              name="name"
+                              label="District"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please select the District!",
+                                  whitespace: true,
                                 },
-                              }),
-                            ]}
-                          >
-                            <Input.Password placeholder="Enter your password confirmation" />
-                          </Form.Item>
-
-                          <Form.Item>
-                            <Button
-                              type="primary"
-                              htmlType="submit"
-                              style={{ width: "100%" }}
+                              ]}
                             >
-                              Cấp tài khoản
-                            </Button>
-                          </Form.Item>
-                        </Form>
-                      </div>
+                              <Select
+                                onSelect={handleSelectDistrict}
+                                showSearch
+                                placeholder="Select District"
+                                optionFilterProp="children"
+                                filterOption={(input: any, option: any) =>
+                                  option.children
+                                    .toLowerCase()
+                                    .indexOf(input.toLowerCase()) >= 0
+                                }
+                                filterSort={(optionA: any, optionB: any) =>
+                                  optionA.children
+                                    .toLowerCase()
+                                    .localeCompare(
+                                      optionB.children.toLowerCase()
+                                    )
+                                }
+                              >
+                                {districtList?.districts?.map((item: any) => {
+                                  return (
+                                    <Option key={item.id} value={item.id}>
+                                      {item.name}
+                                    </Option>
+                                  );
+                                })}
+                              </Select>
+                            </Form.Item>
+
+                            <Form.Item
+                              className="username"
+                              name="username"
+                              label="Username"
+                            >
+                              <Input placeholder={name} disabled />
+                            </Form.Item>
+
+                            <Form.Item
+                              className="username"
+                              label="Password"
+                              name="password"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input your password!",
+                                },
+                              ]}
+                            >
+                              <Input.Password
+                                onChange={handleChangePassword}
+                                placeholder="Enter your password"
+                              />
+                            </Form.Item>
+
+                            <Form.Item
+                              className="username"
+                              name="confirm"
+                              label="Confirm Password"
+                              dependencies={["password"]}
+                              hasFeedback
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please confirm your password!",
+                                },
+                                ({ getFieldValue }) => ({
+                                  validator(_, value) {
+                                    if (
+                                      !value ||
+                                      getFieldValue("password") === value
+                                    ) {
+                                      return Promise.resolve();
+                                    }
+                                    return Promise.reject(
+                                      new Error(
+                                        "The two passwords that you entered do not match!"
+                                      )
+                                    );
+                                  },
+                                }),
+                              ]}
+                            >
+                              <Input.Password placeholder="Enter your password confirmation" />
+                            </Form.Item>
+
+                            <Form.Item>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "100%" }}
+                              >
+                                Cấp tài khoản
+                              </Button>
+                            </Form.Item>
+                          </Form>
+                        </div>
+                      </Card>
                     </Col>
                   </Row>
                 </div>
@@ -648,6 +670,63 @@ function A2AddUser() {
                         })}
                         onChange={handleChangeDate}
                       />
+                    </Form.Item>
+                  </Form>
+                </Modal>
+                <Modal
+                  visible={isModalVisibleModalPassword}
+                  onOk={handleOkChangePassword}
+                  onCancel={handleCancel}
+                >
+                  <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    layout="vertical"
+                    className="row-col"
+                  >
+                    <Form.Item
+                      className="username"
+                      label="Password"
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        onChange={handleChangePassword}
+                        placeholder="Enter your password"
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      className="username"
+                      name="confirm"
+                      label="Confirm Password"
+                      dependencies={["password"]}
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please confirm your password!",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error(
+                                "The two passwords that you entered do not match!"
+                              )
+                            );
+                          },
+                        }),
+                      ]}
+                    >
+                      <Input.Password placeholder="Enter your password confirmation" />
                     </Form.Item>
                   </Form>
                 </Modal>

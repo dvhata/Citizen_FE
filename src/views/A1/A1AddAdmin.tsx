@@ -21,7 +21,6 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import provinceApi from "api/ProvinceApi";
 import Sidenav from "components/layout/Sidenav";
@@ -32,9 +31,12 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon, {
   CheckCircleOutlined,
+  ClockCircleOutlined,
   CloseCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -135,12 +137,6 @@ function A1AddAdmin() {
     console.log("Failed:", errorInfo);
   };
 
-  // log out
-  const handleLogOut = React.useCallback((e) => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }, []);
-
   //search
   const onSearch = async (value: string) => {
     provinceApi
@@ -175,6 +171,7 @@ function A1AddAdmin() {
 
   const [permissionModal, setPermissionModal] = React.useState("");
   const showModalUpdate = async (e: any) => {
+    console.log(e.target.value)
     setPermissionModal(e.target.value);
     console.log(e.target.value);
     provinceList?.provinces?.map((province) => {
@@ -214,6 +211,8 @@ function A1AddAdmin() {
     setIsModalVisible(false);
     window.location.reload();
   };
+
+
 
   return (
     <>
@@ -286,16 +285,7 @@ function A1AddAdmin() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -320,7 +310,7 @@ function A1AddAdmin() {
                             <Paragraph className="lastweek">
                               Tổng số:
                               <span className="blue">
-                                {provinceList?.provinces?.length} / 63
+                                {provinceList?.provinces?.length}
                               </span>
                             </Paragraph>
                           </div>
@@ -358,9 +348,22 @@ function A1AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    <div className="ant-progress-project">
-                                      <Progress percent={d.id_done} />
-                                    </div>
+                                    {d.is_done === 1 && (
+                                      <Tag
+                                        icon={<CheckCircleOutlined />}
+                                        color="success"
+                                      >
+                                        Hoàn thành
+                                      </Tag>
+                                    )}
+                                    {d.is_done === 0 && (
+                                      <Tag
+                                        icon={<ClockCircleOutlined />}
+                                        color="default"
+                                      >
+                                        Chưa hoàn thành
+                                      </Tag>
+                                    )}
                                   </td>
                                   <td>
                                     <div className="percent-progress">
@@ -369,15 +372,14 @@ function A1AddAdmin() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        delete
                                       </button>
-
                                       <button
                                         className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        update
                                       </button>
                                     </div>
                                   </td>
@@ -400,7 +402,7 @@ function A1AddAdmin() {
                         <div className="timeline-box">
                           <Title level={5}>
                             {" "}
-                            Khai báo và cấp mã cho 63 tỉnh/thành phố
+                            Khai báo và cấp mã cho Tỉnh/thành phố
                           </Title>
                           <Title className="font-regular text-muted" level={5}>
                             {/* Titlesub */}
