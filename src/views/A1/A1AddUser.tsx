@@ -519,47 +519,54 @@ function A1AddUser() {
                             </Form.Item>
 
                             <Form.Item
-                      className="username"
-                      label="Password"
-                      name="password"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Nhập password!",
-                        },
-                      ]}
-                    >
-                      <Input.Password
-                        onChange={handleChangePassword}
-                        placeholder="Nhập password"
-                      />
-                    </Form.Item>
+                              className="username"
+                              label="Password"
+                              name="password"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Nhập password!",
+                                },
+                                {
+                                  min: 8,
+                                  message: "Mật khẩu tối thiểu 8 kí tự",
+                                },
+                              ]}
+                            >
+                              <Input.Password
+                                onChange={handleChangePassword}
+                                placeholder="Nhập password"
+                              />
+                            </Form.Item>
 
-                    <Form.Item
-                      className="username"
-                      name="confirm"
-                      label="Xác nhận password!"
-                      dependencies={["password"]}
-                      hasFeedback
-                      rules={[
-                        {
-                          required: true,
-                          message: "Xác nhận password!",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (!value || getFieldValue("password") === value) {
-                              return Promise.resolve();
-                            }
-                            return Promise.reject(
-                              new Error("Mật khẩu không khớp!")
-                            );
-                          },
-                        }),
-                      ]}
-                    >
-                      <Input.Password placeholder="Nhập password xác nhận" />
-                    </Form.Item>
+                            <Form.Item
+                              className="username"
+                              name="confirm"
+                              label="Xác nhận password!"
+                              dependencies={["password"]}
+                              hasFeedback
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Xác nhận password!",
+                                },
+                                ({ getFieldValue }) => ({
+                                  validator(_, value) {
+                                    if (
+                                      !value ||
+                                      getFieldValue("password") === value
+                                    ) {
+                                      return Promise.resolve();
+                                    }
+                                    return Promise.reject(
+                                      new Error("Mật khẩu không khớp!")
+                                    );
+                                  },
+                                }),
+                              ]}
+                            >
+                              <Input.Password placeholder="Nhập password xác nhận" />
+                            </Form.Item>
 
                             <Form.Item>
                               <Button
@@ -672,6 +679,7 @@ function A1AddUser() {
                           required: true,
                           message: "Nhập password!",
                         },
+                        { min: 8, message: "Mật khẩu tối thiểu 8 kí tự" },
                       ]}
                     >
                       <Input.Password
@@ -691,15 +699,14 @@ function A1AddUser() {
                           required: true,
                           message: "Xác nhận password!",
                         },
+                        { min: 8, message: "Mật khẩu tối thiểu 8 kí tự" },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
                             if (!value || getFieldValue("password") === value) {
                               return Promise.resolve();
                             }
                             return Promise.reject(
-                              new Error(
-                                "Mật khẩu không khớp!"
-                              )
+                              new Error("Mật khẩu không khớp!")
                             );
                           },
                         }),

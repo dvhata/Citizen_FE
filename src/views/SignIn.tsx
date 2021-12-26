@@ -209,14 +209,7 @@ export default function SignIn() {
                   />
                 </Form.Item>
 
-                <Form.Item
-                  name="remember"
-                  className="aligin-center"
-                  valuePropName="checked"
-                >
-                  <Switch defaultChecked onChange={onChange} />
-                  Nhớ tôi
-                </Form.Item>
+                
 
                 <Form.Item>
                   <Button

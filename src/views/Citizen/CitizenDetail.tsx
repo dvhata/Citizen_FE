@@ -311,7 +311,7 @@ function CitizenDetail(props: CitizenModalProps) {
                     <Input
                         value={job}
                         onChange={(e) => setJob(e.target.value)}
-                        placeholder="Nhập trình độ học vấn ..."
+                        placeholder="Nhập nghề nghiệp ..."
                     >
                     </Input>
                 </div>
