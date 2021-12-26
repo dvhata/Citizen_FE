@@ -31,6 +31,7 @@ import A3Statistic from "views/A3/A3Statistic";
 import A2Statistic from "views/A2/A2Statistic";
 import B2NhapLieu from "views/B2/B2NhapLieu";
 import B2PhatPhieu from "views/B2/B2PhatPhieu";
+import Statistic from "views/Statistic/Statistic";
 
 let role_temp = localStorage.getItem("role");
 let role: number;
@@ -48,6 +49,7 @@ function App() {
         <Routes>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/citizen" element={<Citizen />} />
+          <Route path="/statistic" element={<Statistic />} />
           {role === 1 && (
             <>
               <Route path="/add-admin" element={<A1AddAdmin />} />
