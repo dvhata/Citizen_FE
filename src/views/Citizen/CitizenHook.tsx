@@ -1,21 +1,111 @@
 import citizenApi from "api/citizenApi";
 import { CitizenData } from "models/Citizen/CitizenData";
+import { DistrictData } from "models/District/DistrictData";
+import { HamletData } from "models/Hamlet/HamletData";
+import { ProvinceData } from "models/Province/ProvinceData";
+import { WardData } from "models/Ward/WardData";
 import React from "react";
 
 export function useCitizen() {
     const token = localStorage.getItem("token");
-    const permission = localStorage.getItem("permission");
     const [list, setList] = React.useState<CitizenData[]>([]);
     const [filter, setFilter] = React.useState<CitizenData>(new CitizenData());
+    const [permission, setPermisstion] = React.useState(localStorage.getItem("permission"));
+    const originProvince = localStorage.getItem("permission")?.substring(0, 2);
+    const originDistrict = localStorage.getItem("permission")?.substring(2, 4);
+    const originWard = localStorage.getItem("permission")?.substring(4, 6);
+    const originHamlet = localStorage.getItem("permission")?.substring(6, 8);
+    const [provinceList, setProvinceList] = React.useState<ProvinceData[]>([]);
+    const [districtList, setDistrictList] = React.useState<DistrictData[]>([]);
+    const [wardList, setWardList] = React.useState<WardData[]>([]);
+    const [hamletList, setHamletList] = React.useState<HamletData[]>([]);
 
+    const [selectedProvince, setSelectedProvince] = React.useState<string>();
+    const [selectedDistrict, setSelectedDistrict] = React.useState<string>();
+    const [selectedWard, setSelectedWard] = React.useState<string>();
+    const [selectedHamlet, setSelectedHamlet] = React.useState<string>();
+
+    const [disableProvince, setDisableProvince] = React.useState(false);
+    const [disableDistrict, setDisableDistrict] = React.useState(false);
+    const [disableWard, setDisableWard] = React.useState(false);
+    const [disableHamlet, setDisableHamlet] = React.useState(false);
+
+    console.log(originProvince, originDistrict, originDistrict, originHamlet);
+    const LoadListProvince = React.useCallback(
+        (id: any) => {
+            const fetchProvinceList = async () => {
+                try {
+                    const res = await citizenApi
+                        .provinceList(
+                            token,
+                            id,
+                        );
+                    setProvinceList(res.provinces);
+                } catch (error) {
+                    console.log("error:", error);
+                }
+            };
+            fetchProvinceList();
+        }, []);
+
+    const LoadListDistrict = React.useCallback(
+        (id: any) => {
+            const fetchDistrictList = async () => {
+                try {
+                    const res = await citizenApi
+                        .districtList(
+                            token,
+                            id,
+                        );
+                    setDistrictList(res.districts);
+                } catch (error) {
+                    console.log("error:", error);
+                }
+            };
+            fetchDistrictList();
+        }, []);
+
+    const LoadListHamlet = React.useCallback(
+        (id: any) => {
+            const fetchHamletList = async () => {
+                try {
+                    const res = await citizenApi
+                        .hamletList(
+                            token,
+                            id,
+                        );
+                    setHamletList(res.hamlets);
+                } catch (error) {
+                    console.log("error:", error);
+                }
+            };
+            fetchHamletList();
+        }, []);
+
+    const LoadListWard = React.useCallback(
+        (id: any) => {
+            const fetchWardList = async () => {
+                try {
+                    const res = await citizenApi
+                        .wardList(
+                            token,
+                            id,
+                        );
+                    setWardList(res.wards);
+                } catch (error) {
+                    console.log("error:", error);
+                }
+            };
+            fetchWardList();
+        }, []);
 
     const LoadList = React.useCallback(
-        (filterData: CitizenData) => {
+        (filterData: CitizenData, permisstion) => {
             const fetchCitizenList = async () => {
                 try {
                     const res = await citizenApi
                         .getAll(
-                            permission,
+                            permisstion,
                             token,
                             filterData?.name,
                             filterData?.ID_number,
@@ -33,7 +123,29 @@ export function useCitizen() {
 
     React.useEffect(() => {
         const filterData = new CitizenData();
-        LoadList(filterData);
+        LoadList(filterData, permission);
+        LoadListProvince("");
+        if (originProvince?.length === 2) {
+            setDisableProvince(true);
+            setSelectedProvince(originProvince);
+            LoadListProvince(originProvince);
+        }
+        if (originDistrict?.length === 2) {
+            setDisableDistrict(true);
+            setSelectedDistrict(originDistrict);
+            LoadListDistrict(originDistrict);
+        }
+
+        if (originWard?.length === 2) {
+            setDisableWard(true);
+            setSelectedWard(originWard);
+            LoadListWard(originWard);
+        }
+        if (originHamlet?.length === 2) {
+            setDisableHamlet(true);
+            setSelectedHamlet(originHamlet);
+            LoadListHamlet(originHamlet);
+        }
     }, []);
 
     const handleChangeFilter = React.useCallback(
@@ -41,17 +153,21 @@ export function useCitizen() {
             const filterData = filter;
             filterData[`${property}`] = value;
             setFilter(filterData);
-            LoadList(filterData);
+            LoadList(filterData, permission);
         },
-        [filter, LoadList]
+        [filter, LoadList, permission]
     );
 
     const handleResetFilter = React.useCallback(
         () => {
             const filterData = new CitizenData();
             setFilter(filterData)
-            LoadList(filterData);
-        }, []
+            LoadList(filterData, permission);
+            setSelectedWard(originWard);
+            setSelectedDistrict(originDistrict);
+            setSelectedHamlet(originHamlet);
+            setSelectedProvince(originProvince);
+        }, [permission]
     );
 
     const deleteCitizen = React.useCallback(
@@ -71,12 +187,63 @@ export function useCitizen() {
             fetchCitizenList();
         }, []);
 
+    const handleChangeProvince = React.useCallback(
+        (id: any) => {
+            setSelectedProvince(id);
+            LoadListDistrict(id);
+            LoadList(filter, id);
+            setPermisstion(id);
+            setSelectedWard(undefined);
+            setSelectedDistrict(undefined);
+            setSelectedHamlet(undefined);
+        }, [LoadListDistrict, filter, LoadList]);
+
+    const handleChangeDistrict = React.useCallback(
+        (id: any) => {
+            setSelectedDistrict(id);
+            LoadList(filter, id);
+            setPermisstion(id);
+            LoadListWard(id);
+        }, [LoadListWard, LoadList, filter]);
+
+    const handleChangeWard = React.useCallback(
+        (id: any) => {
+            LoadListHamlet(id);
+            setSelectedWard(id);
+            LoadList(filter, id);
+            setPermisstion(id);
+        }, [LoadListHamlet, filter, LoadList]);
+
+    const handleChangeHamlet = React.useCallback(
+        (id: any) => {
+            setSelectedHamlet(id);
+            setPermisstion(id);
+            LoadList(filter, id);
+        }, [filter, LoadList]);
+
     return {
         list,
+        permission,
         handleChangeFilter,
         filter,
         handleResetFilter,
         LoadList,
         deleteCitizen,
+        provinceList,
+        districtList,
+        wardList,
+        hamletList,
+        disableProvince,
+        disableDistrict,
+        disableWard,
+        disableHamlet,
+        selectedProvince,
+        selectedDistrict,
+        selectedWard,
+        selectedHamlet,
+        handleChangeProvince,
+        handleChangeDistrict,
+        handleChangeWard,
+        handleChangeHamlet,
     };
 };

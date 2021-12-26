@@ -1,4 +1,3 @@
-import { CitizenData } from "models/Citizen/CitizenData";
 import axiosClient from "../config/axiosClient";
 
 const citizenApi = {
@@ -115,6 +114,67 @@ const citizenApi = {
         return axiosClient
             .delete(
                 url,
+                {
+                    headers: { Authorization: "Bearer " + token },
+                }
+            )
+            .then((response) => response.data);
+    },
+
+    provinceList: (token?: any, value?: any) => {
+        const url = "/province/list";
+        return axiosClient
+            .post(
+                url,
+                {
+
+                    id: value,
+                },
+                {
+                    headers: { Authorization: "Bearer " + token },
+                }
+            )
+            .then((response) => response.data);
+    },
+
+    districtList: (token?: any, value?: any) => {
+        const url = "/district/list";
+        return axiosClient
+            .post(
+                url,
+                {
+                    permission: value,
+                },
+                {
+                    headers: { Authorization: "Bearer " + token },
+                }
+            )
+            .then((response) => response.data);
+    },
+
+    wardList: (token?: any, value?: any) => {
+        const url = "/ward/list";
+        return axiosClient
+            .post(
+                url,
+                {
+                    permission: value,
+                },
+                {
+                    headers: { Authorization: "Bearer " + token },
+                }
+            )
+            .then((response) => response.data);
+    },
+
+    hamletList: (token?: any, value?: any) => {
+        const url = "/hamlet/list";
+        return axiosClient
+            .post(
+                url,
+                {
+                    permission: value,
+                },
                 {
                     headers: { Authorization: "Bearer " + token },
                 }
