@@ -356,6 +356,7 @@ function Citizen() {
                             placeholder="Chọn xã/phường"
                             onChange={(value) => handleChangeWard(value)}
                             disabled={disableWard}
+                            value={selectedWard}
                           >
                             {
                               wardList.map((item, index) => {
@@ -375,9 +376,10 @@ function Citizen() {
                             placeholder="Chọn thôn/xóm"
                             onChange={(value) => handleChangeHamlet(value)}
                             disabled={disableHamlet}
+                            value={selectedHamlet}
                           >
                             {
-                              wardList.map((item, index) => {
+                              hamletList.map((item, index) => {
                                 return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
                               })
                             }
