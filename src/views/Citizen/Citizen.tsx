@@ -35,16 +35,35 @@ import CitizenDetail from "./CitizenDetail";
 import CitizenPreview from "./CitizenPreview";
 
 let token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
 const { Header: AntHeader, Content, Sider } = Layout;
-
+const { Option } = Select;
 function Citizen() {
   const {
     list,
+    permission,
     handleChangeFilter,
     filter,
     handleResetFilter,
     LoadList,
     deleteCitizen,
+    disableProvince,
+    disableDistrict,
+    disableWard,
+    disableHamlet,
+    provinceList,
+    districtList,
+    wardList,
+    hamletList,
+    selectedProvince,
+    selectedDistrict,
+    selectedWard,
+    selectedHamlet,
+
+    handleChangeProvince,
+    handleChangeDistrict,
+    handleChangeWard,
+    handleChangeHamlet,
   } = useCitizen();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [selectedModel, setSelectedModel] = React.useState<CitizenData>(
@@ -69,9 +88,9 @@ function Citizen() {
 
   const closeModalCreate = React.useCallback(() => {
     setOpenModal(false);
-    LoadList(filter);
+    LoadList(filter, permission);
     setSelectedModel(new CitizenData());
-  }, [LoadList]);
+  }, [LoadList, permission]);
 
   const columns = [
     {
@@ -114,8 +133,13 @@ function Citizen() {
         return (
           <>
             <button onClick={() => handleGoPreview(model)}>xem</button>
-            <button onClick={() => handleGoToCreate(model)}>sửa</button>
-            <button onClick={() => deleteCitizen(model.id)}>xóa</button>
+            {role && (role === '4' || (role === '5'))
+              && (<button onClick={() => handleGoToCreate(model)}>sửa</button>)
+            }
+            {role && (role === '4' || (role === '5'))
+              && (<button onClick={() => deleteCitizen(model.id)}>xóa</button>)
+            }
+
           </>
         );
       },
@@ -170,9 +194,8 @@ function Citizen() {
         <>
           {" "}
           <Layout
-            className={`layout-dashboard ${
-              pathname === "profile" ? "layout-profile" : ""
-            } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
+            className={`layout-dashboard ${pathname === "profile" ? "layout-profile" : ""
+              } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
           >
             <Drawer
               title={false}
@@ -182,22 +205,19 @@ function Citizen() {
               visible={visible}
               key={placement === "right" ? "left" : "right"}
               width={250}
-              className={`drawer-sidebar ${
-                pathname === "rtl" ? "drawer-sidebar-rtl" : ""
-              } `}
+              className={`drawer-sidebar ${pathname === "rtl" ? "drawer-sidebar-rtl" : ""
+                } `}
             >
               <Layout
-                className={`layout-dashboard ${
-                  pathname === "rtl" ? "layout-dashboard-rtl" : ""
-                }`}
+                className={`layout-dashboard ${pathname === "rtl" ? "layout-dashboard-rtl" : ""
+                  }`}
               >
                 <Sider
                   trigger={null}
                   width={250}
                   theme="light"
-                  className={`sider-primary ant-layout-sider-primary ${
-                    sidenavType === "#fff" ? "active-route" : ""
-                  }`}
+                  className={`sider-primary ant-layout-sider-primary ${sidenavType === "#fff" ? "active-route" : ""
+                    }`}
                   style={{ background: sidenavType }}
                 >
                   <Sidenav /* color={sidenavColor} */ />
@@ -213,9 +233,8 @@ function Citizen() {
               trigger={null}
               width={250}
               theme="light"
-              className={`sider-primary ant-layout-sider-primary ${
-                sidenavType === "#fff" ? "active-route" : ""
-              }`}
+              className={`sider-primary ant-layout-sider-primary ${sidenavType === "#fff" ? "active-route" : ""
+                }`}
               style={{ background: sidenavType }}
             >
               <Sidenav /* color={sidenavColor} */ />
@@ -287,13 +306,93 @@ function Citizen() {
                         </div>
                       </Col>
                     </Row>
+                    <Row>
+                      <Col lg={5}>
+                        <div className="input__component">
+                          <span className="input__label">
+                            Tỉnh/thành phố
+                          </span>
+                          <Select
+                            onChange={(value) => handleChangeProvince(value)}
+                            placeholder="Chọn tỉnh/ thành phố"
+                            value={selectedProvince}
+                            disabled={disableProvince}
+                          >
+                            {
+                              provinceList.map((item, index) => {
+                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
+                              })
+                            }
+
+                          </Select>
+                        </div>
+                      </Col>
+                      <Col lg={5}>
+                        <div className="input__component">
+                          <span className="input__label">
+                            Quận/ huyện
+                          </span>
+                          <Select
+                            onChange={(value) => handleChangeDistrict(value)}
+                            placeholder="Chọn quận/ huyện"
+                            value={selectedDistrict}
+                            disabled={disableDistrict}
+                          >
+                            {
+                              districtList.map((item, index) => {
+                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
+                              })
+                            }
+
+                          </Select>
+                        </div>
+                      </Col>
+                      <Col lg={5}>
+                        <div className="input__component">
+                          <span className="input__label">
+                            Xã/phường
+                          </span>
+                          <Select
+                            placeholder="Chọn xã/phường"
+                            onChange={(value) => handleChangeWard(value)}
+                            disabled={disableWard}
+                          >
+                            {
+                              wardList.map((item, index) => {
+                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
+                              })
+                            }
+
+                          </Select>
+                        </div>
+                      </Col>
+                      <Col lg={5}>
+                        <div className="input__component">
+                          <span className="input__label">
+                            Thôn xóm
+                          </span>
+                          <Select
+                            placeholder="Chọn thôn/xóm"
+                            onChange={(value) => handleChangeHamlet(value)}
+                            disabled={disableHamlet}
+                          >
+                            {
+                              wardList.map((item, index) => {
+                                return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
+                              })
+                            }
+
+                          </Select>
+                        </div>
+                      </Col>
+                    </Row>
                     <Row className="button__component">
-                      <Button
+                      {role && (role === '4' || (role === '5')) && (<Button
                         onClick={() => handleGoToCreate(selectedModel)}
                         className="button__create"
                       >
                         Tạo mới
-                      </Button>
+                      </Button>)}
 
                       <Button
                         onClick={handleResetFilter}
@@ -327,7 +426,8 @@ function Citizen() {
             </Layout>
           </Layout>
         </>
-      )}
+      )
+      }
     </>
   );
 }
