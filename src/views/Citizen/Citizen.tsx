@@ -427,6 +427,7 @@ function Citizen() {
                   model={selectedModel}
                   handleCloseModal={closeModalCreate}
                   setModel={setSelectedModel}
+                  hamletList={hamletList}
                 />
                 <CitizenPreview
                   isOpenPreview={openPreviewModal}

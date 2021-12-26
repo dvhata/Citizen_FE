@@ -1,6 +1,7 @@
 import { Button, DatePicker, Input, Modal, ModalProps, Select } from "antd";
 import provinceApi from "api/citizenApi";
 import { CitizenData } from "models/Citizen/CitizenData";
+import { HamletData } from "models/Hamlet/HamletData";
 import moment, { Moment } from "moment";
 import React, { useState } from "react";
 import "./CitizenDetail.css";
@@ -11,17 +12,19 @@ interface CitizenModalProps extends ModalProps {
     setModel: React.Dispatch<React.SetStateAction<CitizenData>>,
     handleCloseModal: () => void,
     handleChangeField?: (field: keyof CitizenData, value: any) => void,
+    hamletList: HamletData[],
 }
 const { Option } = Select;
 function CitizenDetail(props: CitizenModalProps) {
-    const { isOpenModel, handleCloseModal, model, setModel } = props;
+    const { isOpenModel, handleCloseModal, model, hamletList } = props;
     const gender = [
         { id: 1, name: 'nam' },
         { id: 2, name: 'nữ' }
     ]
     const token = localStorage.getItem("token");
-    const permission = localStorage.getItem("permission");
-
+    const role = localStorage.getItem("role");
+    const [disable, setDisable] = React.useState<boolean>(true);
+    const [permission, setPermisstion] = React.useState<any>(localStorage.getItem("permission"));
     const [name, setName] = React.useState<string>(model.name ? model.name : '');
     const [ID_number, setID_number] = React.useState<string>(model.ID_number ? model.ID_number : '');
     const [Gender, setGender] = React.useState<number>(model.gender ? model.gender : 0);
@@ -86,13 +89,17 @@ function CitizenDetail(props: CitizenModalProps) {
                         setID_number('');
                         handleCloseModal();
                     }
-
+                    else alert(res.message);
                 } catch (error) {
                     alert(error);
                 }
             };
-            fetchCreateCitizen();
-        }, [handleCloseModal]);
+            if (!name || !hometown || !temporary_address || permission.length === 6) {
+                alert("Cần nhập các trường thông tin bắt buộc(*)")
+            }
+            else { fetchCreateCitizen(); }
+
+        }, [handleCloseModal, permission]);
 
     const handleUpdate = React.useCallback(
         (
@@ -137,13 +144,18 @@ function CitizenDetail(props: CitizenModalProps) {
                         setID_number('');
                         handleCloseModal();
                     }
+                    else alert(res.message)
 
                 } catch (error) {
                     alert(error);
                 }
             };
-            fetchUpdateCitizen();
-        }, [handleCloseModal]);
+            if (!name || !hometown || !temporary_address || permission.length === 6) {
+                alert("Cần nhập các trường thông tin bắt buộc(*)")
+            }
+            else { fetchUpdateCitizen(); }
+
+        }, [handleCloseModal, permission]);
 
     return (
         <Modal
@@ -159,14 +171,42 @@ function CitizenDetail(props: CitizenModalProps) {
                         : `Tạo mới công dân`}
                 </div>
 
+                {role === '4' && (
+                    <div className="input__component">
+                        <div>
+                            <span>
+                                Thôn xóm
+                            </span>
+                            <span className="text-danger">*</span>
+                        </div>
+                        <Select
+                            placeholder="Chọn thôn/xóm"
+                            onChange={(value) => setPermisstion(value)}
+                        >
+                            {
+                                hamletList.map((item, index) => {
+                                    return <Option value={item?.id ? item?.id : index}>{item.name}</Option>
+                                })
+                            }
+
+                        </Select>
+                        {permission.length === '6' && (<div className="text-danger"> Chưa nhập họ và tên </div>)}
+                    </div>)}
+
                 <div className="input__component">
-                    <span>Tên</span>
+                    <div>
+                        <span>
+                            Họ và tên
+                        </span>
+                        <span className="text-danger">*</span>
+                    </div>
                     <Input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Nhập tên công dân ..."
                     >
                     </Input>
+                    {!name && <div className="text-danger"> Chưa nhập họ và tên </div>}
                 </div>
 
                 <div className="input__component">
@@ -178,6 +218,7 @@ function CitizenDetail(props: CitizenModalProps) {
                     >
                     </Input>
                 </div>
+
 
                 {<div className="input__component">
                     <span>Ngày sinh</span>
@@ -204,23 +245,35 @@ function CitizenDetail(props: CitizenModalProps) {
                 </div>
 
                 <div className="input__component">
-                    <span>Quê quán</span>
+                    <div>
+                        <span>
+                            Quê quán
+                        </span>
+                        <span className="text-danger">*</span>
+                    </div>
                     <Input
                         value={hometown}
                         onChange={(e) => setHometown(e.target.value)}
                         placeholder="Nhập quê quán công dân ..."
                     >
                     </Input>
+                    {!hometown && <div className="text-danger"> Chưa nhập quê quán </div>}
                 </div>
 
                 <div className="input__component">
-                    <span>Thuờng trú</span>
+                    <div>
+                        <span>
+                            Địa chỉ thường trú
+                        </span>
+                        <span className="text-danger">*</span>
+                    </div>
                     <Input
                         value={temporary_address}
                         onChange={(e) => setTemporary_address(e.target.value)}
-                        placeholder="Nhập thường công dân ..."
+                        placeholder="Nhập địa chỉ thường trú công dân ..."
                     >
                     </Input>
+                    {!temporary_address && <div className="text-danger"> Chưa nhập địa chỉ thường trú</div>}
                 </div>
 
                 <div className="input__component">
