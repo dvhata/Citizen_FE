@@ -12,9 +12,9 @@ export function useStatistic() {
     const [genderStatistic, setGenderStatistic] = React.useState<any>();
     const [amountStatistic, setAmountStatistic] = React.useState([]);
     const originProvince = localStorage.getItem("permission")?.substring(0, 2);
-    const originDistrict = localStorage.getItem("permission")?.substring(2, 4);
-    const originWard = localStorage.getItem("permission")?.substring(4, 6);
-    const originHamlet = localStorage.getItem("permission")?.substring(6, 8);
+    const originDistrict = localStorage.getItem("permission")?.substring(0, 4);
+    const originWard = localStorage.getItem("permission")?.substring(0, 6);
+    const originHamlet = localStorage.getItem("permission")?.substring(0, 8);
     const [provinceList, setProvinceList] = React.useState<ProvinceData[]>([]);
     const [districtList, setDistrictList] = React.useState<DistrictData[]>([]);
     const [wardList, setWardList] = React.useState<WardData[]>([]);
@@ -158,34 +158,34 @@ export function useStatistic() {
             setDisableProvince(true);
             setSelectedProvince(originProvince);
             LoadListProvince(originProvince);
-            if (originDistrict?.length !== 2) {
+            if (originDistrict?.length !== 4) {
                 LoadAgeStatistic(originProvince);
                 LoadAmountStatistic(originProvince);
                 LoadGenderStatistic(originProvince);
             }
         }
-        if (originDistrict?.length === 2 && originWard?.length !== 2) {
+        if (originDistrict?.length === 4) {
             setDisableDistrict(true);
             setSelectedDistrict(originDistrict);
             LoadListDistrict(originDistrict);
-            if (originWard?.length !== 2) {
+            if (originWard?.length !== 6) {
                 LoadAgeStatistic(originDistrict);
                 LoadAmountStatistic(originDistrict);
                 LoadGenderStatistic(originDistrict);
             }
         }
 
-        if (originWard?.length === 2) {
+        if (originWard?.length === 6) {
             setDisableWard(true);
             setSelectedWard(originWard);
             LoadListWard(originWard);
-            if (originHamlet?.length !== 2) {
+            if (originHamlet?.length !== 8) {
                 LoadAgeStatistic(originDistrict);
                 LoadAmountStatistic(originDistrict);
                 LoadGenderStatistic(originDistrict);
             }
         }
-        if (originHamlet?.length === 2) {
+        if (originHamlet?.length === 8) {
             setDisableHamlet(true);
             setSelectedHamlet(originHamlet);
             LoadListHamlet(originHamlet);
