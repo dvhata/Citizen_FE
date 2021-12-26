@@ -21,7 +21,6 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import Sidenav from "components/layout/Sidenav";
 import { User } from "models/User/User";
@@ -30,11 +29,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon, {
   CheckCircleOutlined,
+  ClockCircleOutlined,
   CloseCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import wardApi from "api/WardApi";
 import { Ward } from "models/Ward/Ward";
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -136,12 +138,6 @@ function A3AddAdmin() {
     console.log("Failed:", errorInfo);
   };
 
-  // log out
-  const handleLogOut = React.useCallback((e) => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }, []);
-
   //search
   const onSearch = async (value: string) => {
     wardApi
@@ -169,16 +165,14 @@ function A3AddAdmin() {
   // update modal
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [initialModalWardId, setInitialModalWardId] =
-    React.useState("");
-  const [initialModalWardName, setInitialModalWardName] =
-    React.useState("");
+  const [initialModalWardId, setInitialModalWardId] = React.useState("");
+  const [initialModalWardName, setInitialModalWardName] = React.useState("");
 
   const [permissionModal, setPermissionModal] = React.useState("");
   const showModalUpdate = async (e: any) => {
     setPermissionModal(e.target.value);
     console.log(e.target.value);
-    wardList?.wards?.map((ward : any) => {
+    wardList?.wards?.map((ward: any) => {
       if (e.target.value === ward.id) {
         console.log(e.target.value, ward);
         setInitialModalWardId(ward.id as string);
@@ -196,11 +190,13 @@ function A3AddAdmin() {
       .wardUpdate(
         token as string,
         permissionModal as string,
+        permission as string,
         name as string,
         id as string
       )
       .then((response: Ward) => {
         if (response.success === true) {
+          alert("Successfully");
           setWardList(response);
           window.location.reload();
         } else {
@@ -287,16 +283,7 @@ function A3AddAdmin() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -359,18 +346,20 @@ function A3AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    <div className="ant-progress-project">
-                                      <Progress percent={d.is_done} />
-                                    </div>
+                                    <Progress percent={d.is_done} />
                                   </td>
                                   <td>
                                     <div className="percent-progress">
-                                      <button className="button" value={d.id} onClick={onDelete}>
+                                      <button
+                                        className="button"
+                                        value={d.id}
+                                        onClick={onDelete}
+                                      >
                                         Delete
                                       </button>
 
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
@@ -416,7 +405,7 @@ function A3AddAdmin() {
                                 {
                                   required: true,
                                   message:
-                                    "Please input your Ward Id! from 01-99",
+                                    "Please input your Ward Id! from 00-99",
                                 },
                               ]}
                             >
@@ -477,7 +466,7 @@ function A3AddAdmin() {
                       className="username"
                       label="Ward Id"
                       name="Ward Id"
-                      initialValue={initialModalWardId}
+                      initialValue={initialModalWardId.slice(4)}
                     >
                       <Input
                         prefix={permission}

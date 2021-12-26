@@ -45,15 +45,17 @@ class HamletApi {
 
   hamletUpdate = (
     token?: string,
+    permissionModal?: any,
     permission?: any,
     name?: string,
     id?: string
   ) => {
-    const url = "/hamlet/" + permission;
+    const url = "/hamlet/" + permissionModal;
     return axiosClient
       .put(
         url,
         {
+          permission,
           name,
           id,
         },
@@ -63,6 +65,26 @@ class HamletApi {
       )
       .then((response) => response.data);
   };
+
+  hamletCheckbox = (
+    token?: string,
+    permission?: any,
+    is_done?: boolean
+  ) => {
+    const url = "/mark_done" ;
+    return axiosClient
+      .post(
+        url,
+        {
+          permission,
+          is_done
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
+      .then((response) => response.data);
+  }; 
 }
 
 const hamletApi = new HamletApi();

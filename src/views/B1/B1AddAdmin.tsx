@@ -3,6 +3,7 @@ import {
   Alert,
   Button,
   Card,
+  Checkbox,
   Col,
   DatePicker,
   Drawer,
@@ -21,7 +22,6 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { Footer, Header } from "antd/lib/layout/layout";
 import Paragraph from "antd/lib/typography/Paragraph";
 import Sidenav from "components/layout/Sidenav";
 import { User } from "models/User/User";
@@ -30,11 +30,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon, {
   CheckCircleOutlined,
+  ClockCircleOutlined,
   CloseCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { Hamlet } from "models/Hamlet/Hamlet";
 import hamletApi from "api/HamletApi";
+import Header from "components/layout/Header";
+import Footer from "components/layout/Footer";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -84,7 +87,7 @@ function B1AddAdmin() {
 
   React.useEffect(() => {
     const fetchData = () => {
-     hamletApi
+      hamletApi
         .hamletList(token as string, permission as string)
         .then((response) => {
           setHamletList(response);
@@ -102,18 +105,11 @@ function B1AddAdmin() {
   }
 
   const handleChangeHamletId = React.useCallback((e) => {
-    // const temp = parseInt(e.target.value);
-    // temp >= parseInt("01") && temp <= parseInt("63")
-    //   ? setId(e.target.value)
-    //   : setId("");
     if (e.target.value.length > 2) {
       setId("");
     } else {
       setId(e.target.value);
     }
-    // for (let i = 1; i <= 9; i++) {
-    //   if (e.target.value === i.toString) setId("");
-    // }
   }, []);
   const suffix = id !== "" ? <CheckCircleOutlined /> : <CloseCircleOutlined />;
 
@@ -122,7 +118,7 @@ function B1AddAdmin() {
   }, []);
 
   const onFinish = async () => {
-   hamletApi
+    hamletApi
       .hamletRegist(
         token as string,
         permission as string,
@@ -142,12 +138,6 @@ function B1AddAdmin() {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
-  // log out
-  const handleLogOut = React.useCallback((e) => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }, []);
 
   //search
   const onSearch = async (value: string) => {
@@ -176,8 +166,7 @@ function B1AddAdmin() {
   // update modal
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [initialModalHamletId, setInitialModalHamletId] =
-    React.useState("");
+  const [initialModalHamletId, setInitialModalHamletId] = React.useState("");
   const [initialModalHamletName, setInitialModalHamletName] =
     React.useState("");
 
@@ -203,12 +192,14 @@ function B1AddAdmin() {
       .hamletUpdate(
         token as string,
         permissionModal as string,
+        permission as string,
         name as string,
         id as string
       )
       .then((response: Hamlet) => {
         if (response.success === true) {
           setHamletList(response);
+          alert(" Successfully ");
           window.location.reload();
         } else {
           window.location.reload();
@@ -222,6 +213,15 @@ function B1AddAdmin() {
     setIsModalVisible(false);
     window.location.reload();
   };
+
+  // checkbox
+  function onChangeCheckbox(e: any) {
+    hamletApi
+      .hamletCheckbox(token as string, e.target.value, e.target.checked)
+      .then((response: Hamlet) => {
+        alert(" Successfully ");
+      });
+  }
 
   return (
     <>
@@ -294,16 +294,7 @@ function B1AddAdmin() {
             <Layout>
               <Affix>
                 <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
-                  Header here
-                  <Button onClick={handleLogOut}>Log out</Button>
-                  <Header
-                  // onPress={openDrawer}
-                  // name={pathname}
-                  // subName={pathname}
-                  // handleSidenavColor={handleSidenavColor}
-                  // handleSidenavType={handleSidenavType}
-                  // handleFixedNavbar={handleFixedNavbar}
-                  />
+                  <Header />
                 </AntHeader>
               </Affix>
 
@@ -366,18 +357,28 @@ function B1AddAdmin() {
                                     </h6>
                                   </td>
                                   <td>
-                                    <div className="ant-progress-project">
-                                      <Progress percent={d.is_done} />
-                                    </div>
+                                    <Checkbox
+                                      defaultChecked={
+                                        d.is_done === 1 ? true : false
+                                      }
+                                      value={d.id}
+                                      onChange={onChangeCheckbox}
+                                    >
+                                      Hoàn thành
+                                    </Checkbox>
                                   </td>
                                   <td>
                                     <div className="percent-progress">
-                                      <button className="button" value={d.id} onClick={onDelete}>
+                                      <button
+                                        className="button"
+                                        value={d.id}
+                                        onClick={onDelete}
+                                      >
                                         Delete
                                       </button>
 
                                       <button
-                                      className="button"
+                                        className="button"
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
@@ -484,7 +485,7 @@ function B1AddAdmin() {
                       className="username"
                       label="Hamlet Id"
                       name="Hamlet Id"
-                      initialValue={initialModalHamletId}
+                      initialValue={initialModalHamletId.slice(6)}
                     >
                       <Input
                         prefix={permission}

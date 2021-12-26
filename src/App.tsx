@@ -25,13 +25,12 @@ import A3AddAdmin from "views/A3/A3AddAdmin";
 import A3AddUser from "views/A3/A3AddUser";
 import B1AddAdmin from "views/B1/B1AddAdmin";
 import B1AddUser from "views/B1/B1AddUser";
-import B2AddAdmin from "views/B2/B2AddAdmin";
-import B2AddUser from "views/B2/B2AddUser";
 import A1Statistic from "views/A1/A1Statistic";
-import B2Statistic from "views/B2/B2Statistic";
 import B1Statistic from "views/B1/B1Statistic";
 import A3Statistic from "views/A3/A3Statistic";
 import A2Statistic from "views/A2/A2Statistic";
+import B2NhapLieu from "views/B2/B2NhapLieu";
+import B2PhatPhieu from "views/B2/B2PhatPhieu";
 
 let role_temp = localStorage.getItem("role");
 let role: number;
@@ -81,9 +80,8 @@ function App() {
 
           {role === 5 && (
             <>
-              <Route path="/add-admin" element={<B2AddAdmin />} />
-              <Route path="/add-user" element={<B2AddUser />} />
-              <Route path="/statistic" element={<B2Statistic />} />
+              <Route path="/add-admin" element={<B2NhapLieu />} />
+              <Route path="/add-user" element={<B2PhatPhieu />} />
             </>
           )}
         </Routes>

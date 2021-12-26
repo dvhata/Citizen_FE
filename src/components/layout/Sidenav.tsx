@@ -1,20 +1,7 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // import { useState } from "react";
 import { Menu, Button } from "antd";
+import React from "react";
 import { NavLink } from "react-router-dom";
-// import { NavLink, useLocation } from "react-router-dom";
-// import logo from "../../assets/images/logo.png";
 
 function Sidenav(
   {
@@ -165,6 +152,14 @@ function Sidenav(
     </svg>,
   ];
 
+  //   let role_temp = localStorage.getItem("role");
+  //  const [role,setRole] = React.useState<number>()
+  //   if (role_temp === "1") setRole(1);
+  //   if (role_temp === "2") setRole(2);
+  //   if (role_temp === "3") setRole(3);
+  //   if (role_temp === "4") setRole(4);
+  //   if (role_temp === "5") setRole(5);
+
   return (
     <>
       <div className="brand">
@@ -172,7 +167,9 @@ function Sidenav(
         <img src="https://img.icons8.com/color/48/000000/vietnam.png" />
       </div>
       <hr />
-      <Menu theme="light" mode="inline">
+      {/* {role !== 5 &&  <Menu theme="light" mode="inline"> */}
+
+      <Menu>
         <Menu.Item key="1">
           <NavLink to="/add-admin">
             <span
@@ -226,6 +223,63 @@ function Sidenav(
           </NavLink>
         </Menu.Item>
       </Menu>
+      {/* </Menu> }
+
+      {role === 5 &&  <Menu theme="light" mode="inline">
+        <Menu.Item key="1">
+          <NavLink to="/add-admin">
+            <span
+              className="icon"
+              // style={{
+              //   background: page === "dashboard" ? color : "",
+              // }}
+            >
+              {dashboard}
+            </span>
+            <span className="label">Cấp mã </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <NavLink to="/add-user">
+            <span
+              className="icon"
+              // style={{
+              //   background: page === "dashboard" ? color : "",
+              // }}
+            >
+              {tables}
+            </span>
+            <span className="label">Cấp tài khoản </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/citizen">
+            <span
+              className="icon"
+              // style={{
+              //   background: page === "billing" ? color : "",
+              // }}
+            >
+              {billing}
+            </span>
+            <span className="label">Cư dân</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <NavLink to="/statistic">
+            <span
+              className="icon"
+              // style={{
+              //   background: page === "rtl" ? color : "",
+              // }}
+            >
+              {rtl}
+            </span>
+            <span className="label">Thống kê</span>
+          </NavLink>
+        </Menu.Item>
+      </Menu> } */}
+
       <div className="aside-footer">
         <div
           className="footer-box"

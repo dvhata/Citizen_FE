@@ -15,20 +15,19 @@ import {
   Select,
   Switch,
   Typography,
-} from "antd";
-import Paragraph from "antd/lib/typography/Paragraph";
-import provinceApi from "api/ProvinceApi";
-import userApi from "api/UserApi";
-import Sidenav from "components/layout/Sidenav";
-import { User } from "models/User/User";
-import moment from "moment";
-import { useEffect, useState } from "react";
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { District } from "models/District/District";
-import districtApi from "api/DistrictApi";
-import Header from "components/layout/Header";
-import Footer from "components/layout/Footer";
+} from 'antd';
+import Paragraph from 'antd/lib/typography/Paragraph';
+import districtApi from 'api/DistrictApi';
+import userApi from 'api/UserApi';
+import Footer from 'components/layout/Footer';
+import Header from 'components/layout/Header';
+import Sidenav from 'components/layout/Sidenav';
+import { District } from 'models/District/District';
+import { User } from 'models/User/User';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -75,8 +74,7 @@ function A2AddUser() {
   const [isLogin, setLogin] = React.useState();
   const [userData, setUserData] = React.useState<User>();
   const [districtList, setDistrictList] = React.useState<District>();
-  const [userList, setUserList] = React.useState<User>();
-  const dateFormat = "YYYY-MM-DD";
+  const [userList, setUserList] = React.useState<User>();``
 
   let token = localStorage.getItem("token");
   let role_temp = localStorage.getItem("role");
@@ -204,13 +202,14 @@ function A2AddUser() {
         setStartAt(startAt as any);
         setEndAt(endAt as any);
         setStatus(user.is_active as boolean);
+        setName(user.permission as string);
       }
     });
     setIsModalVisible(true);
   };
 
   const handleOkUpdate = async () => {
-    let id, is_active, password: any;
+    let id, is_active: any;
     userApi
       .update(
         token as string,
@@ -642,7 +641,7 @@ function A2AddUser() {
                       name="username"
                       label="Username"
                     >
-                      <Input placeholder={initialModalUserName} disabled />
+                      <Input placeholder={name} disabled />
                     </Form.Item>
                     <Form.Item
                       className="username"
@@ -674,6 +673,7 @@ function A2AddUser() {
                   </Form>
                 </Modal>
                 <Modal
+                  title="Change Password"
                   visible={isModalVisibleModalPassword}
                   onOk={handleOkChangePassword}
                   onCancel={handleCancel}
