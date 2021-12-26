@@ -259,7 +259,7 @@ function Header(
         </Col>
         <Col span={24} md={18} className="header-control">
           <Button style={{ marginLeft: " 20px" }} onClick={handleLogOut}>
-            Log out
+          Đăng xuất
           </Button>
           <Badge size="small" count={4}>
             <Dropdown overlay={menu} trigger={["click"]}>
@@ -296,7 +296,7 @@ function Header(
           </Link>
           <Input
             className="header-search"
-            placeholder="Type here..."
+            placeholder="Tìm kiếm ..."
             prefix={<SearchOutlined />}
           />
         </Col>

@@ -18,8 +18,8 @@ const { Option } = Select;
 function CitizenDetail(props: CitizenModalProps) {
     const { isOpenModel, handleCloseModal, model, hamletList } = props;
     const gender = [
-        { id: 1, name: 'nam' },
-        { id: 2, name: 'nữ' }
+        { id: 1, name: 'Nam' },
+        { id: 2, name: 'Nữ' }
     ]
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");

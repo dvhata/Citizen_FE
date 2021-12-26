@@ -355,7 +355,7 @@ function A3AddAdmin() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        Delete
+                                        Xóa 
                                       </button>
 
                                       <button
@@ -363,7 +363,7 @@ function A3AddAdmin() {
                                         value={d.id}
                                         onClick={showModalUpdate}
                                       >
-                                        Update
+                                        Sửa
                                       </button>
                                     </div>
                                   </td>
@@ -386,7 +386,7 @@ function A3AddAdmin() {
                         <div className="timeline-box">
                           <Title level={5}>
                             {" "}
-                            Khai báo và cấp mã cho quận/huyện
+                            Khai báo và cấp mã cho Xã/Phường 
                           </Title>
                           <Title className="font-regular text-muted" level={5}>
                             {/* Titlesub */}
@@ -399,13 +399,13 @@ function A3AddAdmin() {
                           >
                             <Form.Item
                               className="username"
-                              label="Ward Id"
+                              label="Mã Xã/Phường "
                               name="District Id"
                               rules={[
                                 {
                                   required: true,
                                   message:
-                                    "Please input your Ward Id! from 00-99",
+                                    "Nhập Mã Xã/Phường ! from 00-99",
                                 },
                               ]}
                             >
@@ -413,25 +413,25 @@ function A3AddAdmin() {
                                 prefix={permission}
                                 suffix={suffix}
                                 onChange={handleChangeWardId}
-                                placeholder="Enter your Ward Id"
+                                placeholder="Nhập Mã Xã/Phường "
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="Ward Name"
-                              name="Ward Name"
+                              label="Tên Xã/Phường"
+                              name="Tên Xã/Phường"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your Ward Name!",
+                                  message: "Nhập Tên Xã/Phường!",
                                 },
                               ]}
                             >
                               <Input
                                 allowClear
                                 onChange={handleChangeWardName}
-                                placeholder="Enter your Ward Name"
+                                placeholder="Nhập Tên Xã/Phường"
                               />
                             </Form.Item>
 
@@ -464,8 +464,8 @@ function A3AddAdmin() {
                   >
                     <Form.Item
                       className="username"
-                      label="Ward Id"
-                      name="Ward Id"
+                      label="Mã Xã/Phường "
+                      name="Mã Xã/Phường "
                       initialValue={initialModalWardId.slice(4)}
                     >
                       <Input

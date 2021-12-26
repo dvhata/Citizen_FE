@@ -152,13 +152,7 @@ function Sidenav(
     </svg>,
   ];
 
-  //   let role_temp = localStorage.getItem("role");
-  //  const [role,setRole] = React.useState<number>()
-  //   if (role_temp === "1") setRole(1);
-  //   if (role_temp === "2") setRole(2);
-  //   if (role_temp === "3") setRole(3);
-  //   if (role_temp === "4") setRole(4);
-  //   if (role_temp === "5") setRole(5);
+  let role_temp = localStorage.getItem("role");
 
   return (
     <>
@@ -168,133 +162,80 @@ function Sidenav(
       </div>
       <hr />
       {/* {role !== 5 &&  <Menu theme="light" mode="inline"> */}
+      {role_temp !== "5" && (
+        <Menu>
+          <Menu.Item key="1">
+            <NavLink to="/add-admin">
+              <span
+                className="icon"
+                // style={{
+                //   background: page === "dashboard" ? color : "",
+                // }}
+              >
+                {dashboard}
+              </span>
+              <span className="label">Cấp mã </span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <NavLink to="/add-user">
+              <span
+                className="icon"
+                // style={{
+                //   background: page === "dashboard" ? color : "",
+                // }}
+              >
+                {tables}
+              </span>
+              <span className="label">Cấp tài khoản </span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <NavLink to="/citizen">
+              <span
+                className="icon"
+                // style={{
+                //   background: page === "billing" ? color : "",
+                // }}
+              >
+                {billing}
+              </span>
+              <span className="label">Cư dân</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <NavLink to="/statistic">
+              <span
+                className="icon"
+                // style={{
+                //   background: page === "rtl" ? color : "",
+                // }}
+              >
+                {rtl}
+              </span>
+              <span className="label">Thống kê</span>
+            </NavLink>
+          </Menu.Item>
+        </Menu>
+      )}
 
-      <Menu>
-        <Menu.Item key="1">
-          <NavLink to="/add-admin">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "dashboard" ? color : "",
-              // }}
-            >
-              {dashboard}
-            </span>
-            <span className="label">Cấp mã </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/add-user">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "dashboard" ? color : "",
-              // }}
-            >
-              {tables}
-            </span>
-            <span className="label">Cấp tài khoản </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/citizen">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "billing" ? color : "",
-              // }}
-            >
-              {billing}
-            </span>
-            <span className="label">Cư dân</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/statistic">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "rtl" ? color : "",
-              // }}
-            >
-              {rtl}
-            </span>
-            <span className="label">Thống kê</span>
-          </NavLink>
-        </Menu.Item>
-      </Menu>
-      {/* </Menu> }
-
-      {role === 5 &&  <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
-          <NavLink to="/add-admin">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "dashboard" ? color : "",
-              // }}
-            >
-              {dashboard}
-            </span>
-            <span className="label">Cấp mã </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/add-user">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "dashboard" ? color : "",
-              // }}
-            >
-              {tables}
-            </span>
-            <span className="label">Cấp tài khoản </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/citizen">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "billing" ? color : "",
-              // }}
-            >
-              {billing}
-            </span>
-            <span className="label">Cư dân</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/statistic">
-            <span
-              className="icon"
-              // style={{
-              //   background: page === "rtl" ? color : "",
-              // }}
-            >
-              {rtl}
-            </span>
-            <span className="label">Thống kê</span>
-          </NavLink>
-        </Menu.Item>
-      </Menu> } */}
-
-      <div className="aside-footer">
-        <div
-          className="footer-box"
-          // style={{
-          //   background: color,
-          // }}
-        >
-          <span className="icon" /* style={{ color }} */>{dashboard}</span>
-          <h6>Contact developer</h6>
-          <p>Hotline: 02910203040</p>
-          <Button type="primary" className="ant-btn-sm ant-btn-block">
-            EMAIL US
-          </Button>
-        </div>
-      </div>
+      {role_temp === "5" && (
+        <Menu>
+          <Menu.Item key="3">
+            <NavLink to="/citizen">
+              <span
+                className="icon"
+                // style={{
+                //   background: page === "billing" ? color : "",
+                // }}
+              >
+                {billing}
+              </span>
+              <span className="label">Cư dân</span>
+            </NavLink>
+          </Menu.Item>
+        </Menu>
+      )}
     </>
   );
 }
