@@ -383,7 +383,7 @@ function A3AddUser() {
                         <div className="project-ant">
                           <div>
                             <Title level={5}>
-                              Tài khoản đã cấp (Quận/huyện)
+                              Tài khoản đã cấp (Xã/Phường)
                             </Title>
                             <Paragraph className="lastweek">
                               Tổng số:
@@ -395,7 +395,7 @@ function A3AddUser() {
                           </div>
                           <div className="ant-filtertabs">
                             <Search
-                              placeholder="Enter Ward Username"
+                              placeholder="Nhập Tên tài khoản"
                               allowClear
                               enterButton="Search"
                               onSearch={onSearch}
@@ -406,10 +406,10 @@ function A3AddUser() {
                           <table className="width-100">
                             <thead>
                               <tr>
-                                <th>USERNAME</th>
-                                <th>PROVINCE</th>
-                                <th>RANGE</th>
-                                <th>STATUS</th>
+                                <th>TÊN TÀI KHOẢN</th>
+                                <th>XÃ/PHƯỜNG</th>
+                                <th>THỜI GIAN KHAI BÁO</th>
+                                <th>QUYỀN KHAI BÁO</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -444,21 +444,21 @@ function A3AddUser() {
                                         value={d.permission}
                                         onClick={onDelete}
                                       >
-                                        delete
+                                        Xóa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >
-                                        update
+                                        Sửa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalChangePassword}
                                       >
-                                        change pass
+                                        Đổi MK
                                       </button>
                                     </div>
                                   </td>
@@ -478,7 +478,7 @@ function A3AddUser() {
                       className="mb-24"
                     >
                       <div>
-                        <Title level={5}>Cấp tài khoản cho cán bộ A3</Title>
+                        <Title level={5}>Cấp tài khoản cho cán bộ B1</Title>
                         <Title className="font-regular text-muted" level={5}>
                           {/* Titlesub */}
                         </Title>
@@ -491,11 +491,11 @@ function A3AddUser() {
                           <Form.Item
                             className="username"
                             name="name"
-                            label="Ward"
+                            label="Xã/Phường"
                             rules={[
                               {
                                 required: true,
-                                message: "Please select the Ward!",
+                                message: "Chon Xã/Phường!",
                                 whitespace: true,
                               },
                             ]}
@@ -503,7 +503,7 @@ function A3AddUser() {
                             <Select
                               onSelect={handleSelectWard}
                               showSearch
-                              placeholder="Select Ward"
+                              placeholder="Chon Xã/Phường"
                               optionFilterProp="children"
                               filterOption={(input: any, option: any) =>
                                 option.children
@@ -528,39 +528,39 @@ function A3AddUser() {
 
                           <Form.Item
                             className="username"
-                            name="username"
-                            label="Username"
+                            name="Tên đăng nhập"
+                            label="Tên đăng nhập"
                           >
                             <Input placeholder={name} disabled />
                           </Form.Item>
 
                           <Form.Item
                             className="username"
-                            label="Password"
-                            name="password"
+                            label="Mật khẩu"
+                            name="Mật khẩu"
                             rules={[
                               {
                                 required: true,
-                                message: "Please input your password!",
+                                message: "Nhập password!",
                               },
                             ]}
                           >
                             <Input.Password
                               onChange={handleChangePassword}
-                              placeholder="Enter your password"
+                              placeholder="Nhập password"
                             />
                           </Form.Item>
 
                           <Form.Item
                             className="username"
                             name="confirm"
-                            label="Confirm Password"
+                            label="Xác nhận Mật khẩu"
                             dependencies={["password"]}
                             hasFeedback
                             rules={[
                               {
                                 required: true,
-                                message: "Please confirm your password!",
+                                message: "Xác nhận Mật khẩu!",
                               },
                               ({ getFieldValue }) => ({
                                 validator(_, value) {
@@ -571,15 +571,13 @@ function A3AddUser() {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
-                                    new Error(
-                                      "The two passwords that you entered do not match!"
-                                    )
+                                    new Error("Mật khẩu không khớp!")
                                   );
                                 },
                               }),
                             ]}
                           >
-                            <Input.Password placeholder="Enter your password confirmation" />
+                            <Input.Password placeholder="Nhập password confirmation" />
                           </Form.Item>
 
                           <Form.Item>
@@ -610,14 +608,14 @@ function A3AddUser() {
                   >
                     <Form.Item
                       className="username"
-                      label="Ward"
-                      name="Ward"
+                      label="XÃ/PHƯỜNG"
+                      name="XÃ/PHƯỜNG"
                       initialValue={initialModalUserArea}
                     >
                       <Select
                         onSelect={handleSelectWard}
                         showSearch
-                        placeholder="Select Ward"
+                        placeholder="Xã/Phường"
                         optionFilterProp="children"
                         filterOption={(input: any, option: any) =>
                           option.children
@@ -642,15 +640,15 @@ function A3AddUser() {
 
                     <Form.Item
                       className="username"
-                      name="username"
-                      label="Username"
+                      name="TÊN TÀI KHOẢN"
+                      label="TÊN TÀI KHOẢN"
                     >
                       <Input placeholder={name} disabled />
                     </Form.Item>
                     <Form.Item
                       className="username"
-                      name="Status"
-                      label="Status"
+                      name="BẬT/TẮT QUYỀN KHAI BÁO"
+                      label="BẬT/TẮT QUYỀN KHAI BÁO"
                       initialValue={initialModalUserStatus}
                     >
                       <Switch
@@ -662,8 +660,8 @@ function A3AddUser() {
 
                     <Form.Item
                       className="username"
-                      label="Range Time"
-                      name="Range Time"
+                      label="THỜI GIAN KHAI BÁO"
+                      name="THỜI GIAN KHAI BÁO"
                     >
                       <RangePicker
                         disabled={!status}
@@ -677,7 +675,7 @@ function A3AddUser() {
                   </Form>
                 </Modal>
                 <Modal
-                  title="Change Password"
+                  title="ĐỔI MẬT KHẨU"
                   visible={isModalVisibleModalPassword}
                   onOk={handleOkChangePassword}
                   onCancel={handleCancel}
@@ -695,26 +693,26 @@ function A3AddUser() {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your password!",
+                          message: "Nhập password!",
                         },
                       ]}
                     >
                       <Input.Password
                         onChange={handleChangePassword}
-                        placeholder="Enter your password"
+                        placeholder="Nhập password"
                       />
                     </Form.Item>
 
                     <Form.Item
                       className="username"
                       name="confirm"
-                      label="Confirm Password"
+                      label="Xác nhận password!"
                       dependencies={["password"]}
                       hasFeedback
                       rules={[
                         {
                           required: true,
-                          message: "Please confirm your password!",
+                          message: "Xác nhận password!",
                         },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
@@ -722,15 +720,13 @@ function A3AddUser() {
                               return Promise.resolve();
                             }
                             return Promise.reject(
-                              new Error(
-                                "The two passwords that you entered do not match!"
-                              )
+                              new Error("Mật khẩu không khớp!")
                             );
                           },
                         }),
                       ]}
                     >
-                      <Input.Password placeholder="Enter your password confirmation" />
+                      <Input.Password placeholder="Nhập password xác nhận" />
                     </Form.Item>
                   </Form>
                 </Modal>

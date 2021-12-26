@@ -33,6 +33,8 @@ import { useCitizen } from "./CitizenHook";
 import { CitizenData } from "models/Citizen/CitizenData";
 import CitizenDetail from "./CitizenDetail";
 import CitizenPreview from "./CitizenPreview";
+import "./Citizen.css"
+import "./CitizenDetail.css"
 
 let token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
@@ -132,12 +134,12 @@ function Citizen() {
       render: (model: CitizenData) => {
         return (
           <>
-            <button onClick={() => handleGoPreview(model)}>xem</button>
+            <button className="button" onClick={() => handleGoPreview(model)}>xem</button>
             {role && (role === '4' || (role === '5'))
-              && (<button onClick={() => handleGoToCreate(model)}>sửa</button>)
+              && (<button className="button" onClick={() => handleGoToCreate(model)}>sửa</button>)
             }
             {role && (role === '4' || (role === '5'))
-              && (<button onClick={() => deleteCitizen(model.id)}>xóa</button>)
+              && (<button className="button" onClick={() => deleteCitizen(model.id)}>xóa</button>)
             }
 
           </>
@@ -249,6 +251,7 @@ function Citizen() {
               <Content className="content-ant">
                 <div className="Citizen__page__master">
                   <Card>
+                    <Row></Row>
                     <Row className="master--title mt-3">Danh sách dân cư</Row>
                     <Row justify="space-around" className="search__componet">
                       <Col lg={5}>
@@ -306,7 +309,7 @@ function Citizen() {
                         </div>
                       </Col>
                     </Row>
-                    <Row>
+                    <Row justify="space-around" className="search__componet">
                       <Col lg={5}>
                         <div className="input__component">
                           <span className="input__label">
@@ -317,6 +320,20 @@ function Citizen() {
                             placeholder="Chọn tỉnh/ thành phố"
                             value={selectedProvince}
                             disabled={disableProvince}
+                            optionFilterProp="children"
+                            showSearch
+                            filterOption={(input: any, option: any) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                            filterSort={(optionA: any, optionB: any) =>
+                              optionA.children
+                                .toLowerCase()
+                                .localeCompare(
+                                  optionB.children.toLowerCase()
+                                )
+                            }
                           >
                             {
                               provinceList.map((item, index) => {
@@ -337,6 +354,19 @@ function Citizen() {
                             placeholder="Chọn quận/ huyện"
                             value={selectedDistrict}
                             disabled={disableDistrict}
+                            showSearch
+                            filterOption={(input: any, option: any) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                            filterSort={(optionA: any, optionB: any) =>
+                              optionA.children
+                                .toLowerCase()
+                                .localeCompare(
+                                  optionB.children.toLowerCase()
+                                )
+                            }
                           >
                             {
                               districtList.map((item, index) => {
@@ -356,6 +386,19 @@ function Citizen() {
                             placeholder="Chọn xã/phường"
                             onChange={(value) => handleChangeWard(value)}
                             disabled={disableWard}
+                            showSearch
+                            filterOption={(input: any, option: any) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                            filterSort={(optionA: any, optionB: any) =>
+                              optionA.children
+                                .toLowerCase()
+                                .localeCompare(
+                                  optionB.children.toLowerCase()
+                                )
+                            }
                           >
                             {
                               wardList.map((item, index) => {
@@ -375,6 +418,19 @@ function Citizen() {
                             placeholder="Chọn thôn/xóm"
                             onChange={(value) => handleChangeHamlet(value)}
                             disabled={disableHamlet}
+                            showSearch
+                            filterOption={(input: any, option: any) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                            filterSort={(optionA: any, optionB: any) =>
+                              optionA.children
+                                .toLowerCase()
+                                .localeCompare(
+                                  optionB.children.toLowerCase()
+                                )
+                            }
                           >
                             {
                               wardList.map((item, index) => {
@@ -389,14 +445,15 @@ function Citizen() {
                     <Row className="button__component">
                       {role && (role === '4' || (role === '5')) && (<Button
                         onClick={() => handleGoToCreate(selectedModel)}
-                        className="button__create"
+                        className="button__create button"
                       >
                         Tạo mới
                       </Button>)}
 
                       <Button
+                      
                         onClick={handleResetFilter}
-                        className="button__resetFilter"
+                        className="button__resetFilter button"
                       >
                         Bỏ lọc
                       </Button>

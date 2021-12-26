@@ -380,7 +380,7 @@ function A1AddUser() {
                           </div>
                           <div className="ant-filtertabs">
                             <Search
-                              placeholder="Enter Province Username"
+                              placeholder="Nhập Tên tài khoản"
                               allowClear
                               enterButton="Search"
                               onSearch={onSearch}
@@ -391,10 +391,10 @@ function A1AddUser() {
                           <table className="width-100">
                             <thead>
                               <tr>
-                                <th>USERNAME</th>
-                                <th>PROVINCE</th>
-                                <th>RANGE</th>
-                                <th>STATUS</th>
+                                <th>TÊN TÀI KHOẢN</th>
+                                <th>TỈNH/THÀNH PHỐ</th>
+                                <th>THỜI GIAN KHAI BÁO</th>
+                                <th>QUYỀN KHAI BÁO</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -425,21 +425,21 @@ function A1AddUser() {
                                         value={d.id}
                                         onClick={onDelete}
                                       >
-                                        delete
+                                        Xóa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >
-                                        update
+                                        Sửa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalChangePassword}
                                       >
-                                        change pass
+                                        Đổi MK
                                       </button>
                                     </div>
                                   </td>
@@ -472,12 +472,12 @@ function A1AddUser() {
                           >
                             <Form.Item
                               className="username"
-                              name="name"
-                              label="Province"
+                              name="TỈNH/THÀNH PHỐ"
+                              label="TỈNH/THÀNH PHỐ"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please select the province!",
+                                  message: "Chon Tỉnh/Thành phố",
                                   whitespace: true,
                                 },
                               ]}
@@ -485,7 +485,7 @@ function A1AddUser() {
                               <Select
                                 onSelect={handleSelectProvince}
                                 showSearch
-                                placeholder="Select Province"
+                                placeholder="Tỉnh/Thành phố"
                                 optionFilterProp="children"
                                 filterOption={(input: any, option: any) =>
                                   option.children
@@ -512,39 +512,39 @@ function A1AddUser() {
 
                             <Form.Item
                               className="username"
-                              name="username"
-                              label="Username"
+                              name="Tên đăng nhập"
+                              label="Tên đăng nhập"
                             >
                               <Input placeholder={name} disabled />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="Password"
-                              name="password"
+                              label="Mật khẩu"
+                              name="Mật khẩu"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your password!",
+                                  message: "Nhập Mật khẩu!",
                                 },
                               ]}
                             >
                               <Input.Password
                                 onChange={handleChangePassword}
-                                placeholder="Enter your password"
+                                placeholder="Nhập password"
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
                               name="confirm"
-                              label="Confirm Password"
+                              label="Xác nhận Mật khẩu"
                               dependencies={["password"]}
                               hasFeedback
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please confirm your password!",
+                                  message: "Xác nhận Mật khẩu!",
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(_, value) {
@@ -556,14 +556,14 @@ function A1AddUser() {
                                     }
                                     return Promise.reject(
                                       new Error(
-                                        "The two passwords that you entered do not match!"
+                                        "Mật khẩu không khớp!"
                                       )
                                     );
                                   },
                                 }),
                               ]}
                             >
-                              <Input.Password placeholder="Enter your password confirmation" />
+                              <Input.Password placeholder="Nhập password confirmation" />
                             </Form.Item>
 
                             <Form.Item>
@@ -595,14 +595,14 @@ function A1AddUser() {
                   >
                     <Form.Item
                       className="username"
-                      label="Province"
-                      name="Province"
+                      label="TỈNH/THÀNH PHỐ"
+                      name="TỈNH/THÀNH PHỐ"
                       initialValue={initialModalUserArea}
                     >
                       <Select
                         onSelect={handleSelectProvince}
                         showSearch
-                        placeholder="Select Province"
+                        placeholder="TỈNH/THÀNH PHỐ"
                         optionFilterProp="children"
                         filterOption={(input: any, option: any) =>
                           option.children
@@ -627,23 +627,23 @@ function A1AddUser() {
 
                     <Form.Item
                       className="username"
-                      name="username"
-                      label="Username"
+                      name="TÊN TÀI KHOẢN"
+                      label="TÊN TÀI KHOẢN"
                     >
                       <Input placeholder={name} disabled />
                     </Form.Item>
                     <Form.Item
                       className="username"
-                      name="Status"
-                      label="Status"
+                      name="BẬT/TẮT QUYỀN KHAI BÁO"
+                      label="BẬT/TẮT QUYỀN KHAI BÁO"
                     >
                       <Switch checked={status} onChange={handleChangeStatus} />
                     </Form.Item>
 
                     <Form.Item
                       className="username"
-                      label="Range Time"
-                      name="Range Time"
+                      label="THỜI GIAN KHAI BÁO"
+                      name="THỜI GIAN KHAI BÁO"
                     >
                       <RangePicker
                         disabled={!status}
@@ -657,7 +657,7 @@ function A1AddUser() {
                   </Form>
                 </Modal>
                 <Modal
-                  title="Change Password"
+                  title="ĐỔI MẬT KHẨU"
                   visible={isModalVisibleModalPassword}
                   onOk={handleOkChangePassword}
                   onCancel={handleCancel}
@@ -675,13 +675,13 @@ function A1AddUser() {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your password!",
+                          message: "Nhập password!",
                         },
                       ]}
                     >
                       <Input.Password
                         onChange={handleChangePassword}
-                        placeholder="Enter your password"
+                        placeholder="Nhập password"
                       />
                     </Form.Item>
 
@@ -694,7 +694,7 @@ function A1AddUser() {
                       rules={[
                         {
                           required: true,
-                          message: "Please confirm your password!",
+                          message: "Xác nhận password!",
                         },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
@@ -703,14 +703,14 @@ function A1AddUser() {
                             }
                             return Promise.reject(
                               new Error(
-                                "The two passwords that you entered do not match!"
+                                "Mật khẩu không khớp!"
                               )
                             );
                           },
                         }),
                       ]}
                     >
-                      <Input.Password placeholder="Enter your password confirmation" />
+                      <Input.Password placeholder="Nhập password xác nhận" />
                     </Form.Item>
                   </Form>
                 </Modal>

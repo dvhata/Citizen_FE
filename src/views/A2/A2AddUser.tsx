@@ -15,19 +15,19 @@ import {
   Select,
   Switch,
   Typography,
-} from 'antd';
-import Paragraph from 'antd/lib/typography/Paragraph';
-import districtApi from 'api/DistrictApi';
-import userApi from 'api/UserApi';
-import Footer from 'components/layout/Footer';
-import Header from 'components/layout/Header';
-import Sidenav from 'components/layout/Sidenav';
-import { District } from 'models/District/District';
-import { User } from 'models/User/User';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+} from "antd";
+import Paragraph from "antd/lib/typography/Paragraph";
+import districtApi from "api/DistrictApi";
+import userApi from "api/UserApi";
+import Footer from "components/layout/Footer";
+import Header from "components/layout/Header";
+import Sidenav from "components/layout/Sidenav";
+import { District } from "models/District/District";
+import { User } from "models/User/User";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -74,7 +74,8 @@ function A2AddUser() {
   const [isLogin, setLogin] = React.useState();
   const [userData, setUserData] = React.useState<User>();
   const [districtList, setDistrictList] = React.useState<District>();
-  const [userList, setUserList] = React.useState<User>();``
+  const [userList, setUserList] = React.useState<User>();
+  ``;
 
   let token = localStorage.getItem("token");
   let role_temp = localStorage.getItem("role");
@@ -375,7 +376,7 @@ function A2AddUser() {
                         <div className="project-ant">
                           <div>
                             <Title level={5}>
-                              Tài khoản đã cấp (Quận/huyện)
+                              Tài khoản đã cấp (Quận/Huyện)
                             </Title>
                             <Paragraph className="lastweek">
                               Tổng số:
@@ -387,7 +388,7 @@ function A2AddUser() {
                           </div>
                           <div className="ant-filtertabs">
                             <Search
-                              placeholder="Enter District Username"
+                              placeholder="Nhập Tên tài khoản"
                               allowClear
                               enterButton="Search"
                               onSearch={onSearch}
@@ -398,10 +399,10 @@ function A2AddUser() {
                           <table className="width-100">
                             <thead>
                               <tr>
-                                <th>USERNAME</th>
-                                <th>DISTRICT</th>
-                                <th>RANGE</th>
-                                <th>STATUS</th>
+                                <th>TÊN TÀI KHOẢN</th>
+                                <th>QUẬN/HUYỆN</th>
+                                <th>THỜI GIAN KHAI BÁO</th>
+                                <th>QUYỀN KHAI BÁO</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -436,21 +437,21 @@ function A2AddUser() {
                                         value={d.permission}
                                         onClick={onDelete}
                                       >
-                                        delete
+                                        Xóa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalUpdate}
                                       >
-                                        update
+                                        Sửa
                                       </button>
                                       <button
                                         className="button"
                                         value={d.permission}
                                         onClick={showModalChangePassword}
                                       >
-                                        change pass
+                                        Đổi MK
                                       </button>
                                     </div>
                                   </td>
@@ -484,11 +485,11 @@ function A2AddUser() {
                             <Form.Item
                               className="username"
                               name="name"
-                              label="District"
+                              label="Quận/Huyện"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please select the District!",
+                                  message: "Chon Quận/Huyện!",
                                   whitespace: true,
                                 },
                               ]}
@@ -496,7 +497,7 @@ function A2AddUser() {
                               <Select
                                 onSelect={handleSelectDistrict}
                                 showSearch
-                                placeholder="Select District"
+                                placeholder="Chon Quận/Huyện"
                                 optionFilterProp="children"
                                 filterOption={(input: any, option: any) =>
                                   option.children
@@ -523,39 +524,39 @@ function A2AddUser() {
 
                             <Form.Item
                               className="username"
-                              name="username"
-                              label="Username"
+                              name="Tên đăng nhập"
+                              label="Tên đăng nhập"
                             >
                               <Input placeholder={name} disabled />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
-                              label="Password"
-                              name="password"
+                              label="Mật khẩu"
+                              name="Mật khẩu"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your password!",
+                                  message: "Nhập Mật khẩu!",
                                 },
                               ]}
                             >
                               <Input.Password
                                 onChange={handleChangePassword}
-                                placeholder="Enter your password"
+                                placeholder="Nhập password"
                               />
                             </Form.Item>
 
                             <Form.Item
                               className="username"
                               name="confirm"
-                              label="Confirm Password"
+                              label="Xác nhận Mật khẩu"
                               dependencies={["password"]}
                               hasFeedback
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please confirm your password!",
+                                  message: "Xác nhận Mật khẩu!",
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(_, value) {
@@ -566,15 +567,13 @@ function A2AddUser() {
                                       return Promise.resolve();
                                     }
                                     return Promise.reject(
-                                      new Error(
-                                        "The two passwords that you entered do not match!"
-                                      )
+                                      new Error("Mật khẩu không khớp!")
                                     );
                                   },
                                 }),
                               ]}
                             >
-                              <Input.Password placeholder="Enter your password confirmation" />
+                              <Input.Password placeholder="Nhập password confirmation" />
                             </Form.Item>
 
                             <Form.Item>
@@ -606,14 +605,14 @@ function A2AddUser() {
                   >
                     <Form.Item
                       className="username"
-                      label="District"
-                      name="District"
+                      label="QUẬN/HUYỆN"
+                      name="QUẬN/HUYỆN"
                       initialValue={initialModalUserArea}
                     >
                       <Select
                         onSelect={handleSelectDistrict}
                         showSearch
-                        placeholder="Select District"
+                        placeholder="Quận/Huyện"
                         optionFilterProp="children"
                         filterOption={(input: any, option: any) =>
                           option.children
@@ -638,15 +637,15 @@ function A2AddUser() {
 
                     <Form.Item
                       className="username"
-                      name="username"
-                      label="Username"
+                      name="TÊN TÀI KHOẢN"
+                      label="TÊN TÀI KHOẢN"
                     >
                       <Input placeholder={name} disabled />
                     </Form.Item>
                     <Form.Item
                       className="username"
-                      name="Status"
-                      label="Status"
+                      name="BẬT/TẮT QUYỀN KHAI BÁO"
+                      label="BẬT/TẮT QUYỀN KHAI BÁO"
                       initialValue={initialModalUserStatus}
                     >
                       <Switch
@@ -658,8 +657,8 @@ function A2AddUser() {
 
                     <Form.Item
                       className="username"
-                      label="Range Time"
-                      name="Range Time"
+                      label="THỜI GIAN KHAI BÁO"
+                      name="THỜI GIAN KHAI BÁO"
                     >
                       <RangePicker
                         disabled={!status}
@@ -673,7 +672,7 @@ function A2AddUser() {
                   </Form>
                 </Modal>
                 <Modal
-                  title="Change Password"
+                  title="ĐỔI MẬT KHẨU"
                   visible={isModalVisibleModalPassword}
                   onOk={handleOkChangePassword}
                   onCancel={handleCancel}
@@ -691,13 +690,13 @@ function A2AddUser() {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your password!",
+                          message: "Nhập password!",
                         },
                       ]}
                     >
                       <Input.Password
                         onChange={handleChangePassword}
-                        placeholder="Enter your password"
+                        placeholder="Nhập password"
                       />
                     </Form.Item>
 
@@ -710,7 +709,7 @@ function A2AddUser() {
                       rules={[
                         {
                           required: true,
-                          message: "Please confirm your password!",
+                          message: "Xác nhận password!",
                         },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
@@ -718,15 +717,13 @@ function A2AddUser() {
                               return Promise.resolve();
                             }
                             return Promise.reject(
-                              new Error(
-                                "The two passwords that you entered do not match!"
-                              )
+                              new Error("Mật khẩu không khớp!")
                             );
                           },
                         }),
                       ]}
                     >
-                      <Input.Password placeholder="Enter your password confirmation" />
+                      <Input.Password placeholder="Nhập password xác nhận" />
                     </Form.Item>
                   </Form>
                 </Modal>
