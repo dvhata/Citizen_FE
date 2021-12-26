@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import citizenApi from "api/citizenApi";
 import { CitizenData } from "models/Citizen/CitizenData";
 import { DistrictData } from "models/District/DistrictData";
@@ -179,12 +180,22 @@ export function useCitizen() {
                             token,
                             id
                         );
-                    console.log(res);
+                    alert("xóa thành công")
+                    LoadList(filter, permission);
                 } catch (error) {
-                    console.log("error:", error);
+                    alert(error);
                 }
             };
-            fetchCitizenList();
+
+            Modal.confirm({
+                title: ("Bạn có chắc chắn muốn xóa bản ghi này"),
+                content: ("Thao tác không thể phục hồi"),
+                okType: "danger",
+                onOk() {
+                    fetchCitizenList();
+                },
+            });
+
         }, []);
 
     const handleChangeProvince = React.useCallback(

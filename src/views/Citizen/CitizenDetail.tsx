@@ -88,7 +88,7 @@ function CitizenDetail(props: CitizenModalProps) {
                     }
 
                 } catch (error) {
-                    console.log("error:", error);
+                    alert(error);
                 }
             };
             fetchCreateCitizen();
@@ -127,7 +127,7 @@ function CitizenDetail(props: CitizenModalProps) {
                             job,
                         );
                     if (res.success) {
-                        alert('tạo mới thành công');
+                        alert('Sửa thông tin thành công');
                         setName('');
                         setGender(1);
                         setHometown('');
@@ -139,7 +139,7 @@ function CitizenDetail(props: CitizenModalProps) {
                     }
 
                 } catch (error) {
-                    console.log("error:", error);
+                    alert(error);
                 }
             };
             fetchUpdateCitizen();
@@ -290,7 +290,7 @@ function CitizenDetail(props: CitizenModalProps) {
                                 education_level,
                                 job
                             )
-                        }> Tạo</Button>
+                        }> {model.id ? 'Sửa' : 'Tạo'}</Button>
                 </div>
             </div>
         </Modal >
