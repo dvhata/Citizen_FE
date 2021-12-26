@@ -2,3 +2,12 @@
     display: flex;
     flex-direction: column;
 }
+.input__component {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.button__component {
+    padding: 20px;
+    align-items: center;
+}
